@@ -64,9 +64,15 @@ img {
 
 .nav .logo {
     display: inline-block;
-    width: 20%;
+    width: 15rem;
     align-items: left;
     background-color: white;
+}
+
+@media screen and (min-width: 750px) {
+    .nav .logo {
+        width: 20rem;
+    }
 }
 
 .nav .menu {
