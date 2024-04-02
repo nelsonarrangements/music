@@ -34,6 +34,16 @@ hr {
     width: 47.5%;
 }
 
+.arrange > * {
+    width: 47.5%;
+    padding-left: 20px;
+}
+
+.sheetmusic >* {
+    width: 40%;
+    height: 210px;
+}
+
 .footer {
     position: fixed;
     background-color: gray;
