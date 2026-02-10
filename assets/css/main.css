@@ -3768,6 +3768,74 @@ section,
   .service-details .service-header .lead {
     font-size: 16px;
   }
+
+  /* --- Library Card Styles --- */
+
+.library-card {
+  background-color: rgba(255, 255, 255, 0.03); /* Glassy dark background */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+/* Hover Effect: Lift & Gold Border Glow */
+.library-card:hover {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent-color); /* Gold border on hover */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Typography */
+.library-title {
+  font-family: var(--heading-font); /* Nunito Sans */
+  color: var(--heading-color);      /* #e0e9f2 */
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.library-desc {
+  font-family: var(--default-font); /* Roboto */
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Custom Gold Badge */
+.badge-gold {
+  background-color: rgba(227, 161, 39, 0.15);
+  color: var(--accent-color);
+  border: 1px solid rgba(227, 161, 39, 0.3);
+  font-family: var(--nav-font);
+  letter-spacing: 0.5px;
+  padding: 0.5em 0.8em;
+}
+
+/* Link Styling */
+.read-more-link {
+  color: var(--accent-color);
+  font-family: var(--heading-font);
+  font-weight: 600;
+  text-decoration: none;
+  transition: padding-left 0.3s ease;
+}
+
+.library-card:hover .read-more-link {
+  padding-left: 5px; /* Subtle movement on hover */
+  color: #fff;       /* White text on hover for contrast */
+}
+
+/* Utilities */
+.text-gold {
+  color: var(--accent-color) !important;
+}
+
+.border-white-10 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
 }
 
 /*--------------------------------------------------------------
