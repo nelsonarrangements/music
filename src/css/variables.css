@@ -1,0 +1,33 @@
+:root {
+  /* Colors */
+  --bg:         #faf8f4;
+  --bg2:        #f2ede6;
+  --bg3:        #e8e0d4;
+  --rust:       #8b4513;
+  --rust-light: #b05a20;
+  --rust-dark:  #6b340f;
+  --text:       #2c2c2c;
+  --text-light: #7a6a5a;
+  --border:     #e0d8ce;
+  --white:      #ffffff;
+
+  /* Typography */
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Source Sans 3', system-ui, sans-serif;
+
+  /* Spacing */
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2.5rem;
+  --space-xl:  4rem;
+  --space-2xl: 6rem;
+
+  /* Layout */
+  --container: 1100px;
+  --radius:    6px;
+  --radius-lg: 12px;
+
+  /* Transitions */
+  --transition: 0.2s ease;
+}

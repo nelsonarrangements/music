@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="PistonLink — the iPadOS and iOS app that takes the guesswork out of organ stop registration."
+    />
+    <title>PistonLink — Nelson Arrangements</title>
+    <link rel="icon" type="image/png" href="/images/piano.png" />
+    <link rel="stylesheet" href="/src/css/main.css" />
+  </head>
+  <body>
+    <!-- include: partials/_nav.html -->
+
+    <!-- Hero -->
+    <section class="hero" style="padding-block: var(--space-xl)">
+      <div class="container">
+        <div class="pl-hero">
+          <img
+            src="/images/pistonlink-icon.png"
+            alt="PistonLink app icon"
+            class="pl-icon"
+          />
+          <p class="hero-eyebrow">Coming Soon &mdash; iPadOS &amp; iOS</p>
+          <h1>Piston<em>Link</em></h1>
+          <p>
+            The app that takes the guesswork out of organ stop registration —
+            built for the bench, not the manual.
+          </p>
+          <span class="pl-badge">In Development</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section section--alt">
+      <div class="container">
+        <p class="section-label">What it does</p>
+        <h2 class="section-title">
+          Everything you need at the <em>console</em>
+        </h2>
+
+        <div class="pl-features">
+          <div class="pl-feature">
+            <div>
+              <h3>Registration Profiles</h3>
+              <p>
+                Create and save named registration profiles that capture the
+                full stop state across General and Divisional pistons for the
+                Great, Swell, and Pedal divisions. Deploy them directly to the
+                organ's memory slots via MIDI SysEx — no more guessing at the
+                console.
+              </p>
+            </div>
+          </div>
+
+          <div class="pl-feature">
+            <div>
+              <h3>Registrant Library</h3>
+              <p>
+                A built-in library of curated stop suggestions for LDS hymns,
+                with verse-by-verse variations. Browse a hymn, find the right
+                sound for each verse, and save it straight to any organ profile
+                — ready for Sunday.
+              </p>
+            </div>
+          </div>
+
+          <div class="pl-feature">
+            <div>
+              <h3>Hands-Free Page Turns</h3>
+              <p>
+                Import any PDF into the built-in sheet music library and turn
+                pages without lifting your hands from the keys. Winking with the
+                right eye advances the page, and the left eye goes back —
+                keeping you in the music where you belong.
+              </p>
+            </div>
+          </div>
+
+          <div class="pl-feature">
+            <div>
+              <h3>MIDI SysEx Integration</h3>
+              <p>
+                Built around the Rodgers 790C as its first supported organ,
+                PistonLink communicates directly with the instrument over MIDI,
+                writing your saved registrations to the organ's own memory
+                pistons with a tap.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+      <div class="container" style="text-align: center">
+        <p class="hero-eyebrow">Stay in the loop</p>
+        <h2 class="section-title" style="margin-bottom: var(--space-sm)">
+          Be the first to know when it <em>launches</em>
+        </h2>
+        <p
+          style="
+            color: var(--text-light);
+            max-width: 480px;
+            margin-inline: auto;
+            margin-bottom: var(--space-lg);
+            line-height: 1.7;
+          "
+        >
+          PistonLink is currently in development. Subscribe to the Nelson
+          Arrangements newsletter and you'll hear about it the moment it's
+          available.
+        </p>
+        <button class="btn btn-primary" id="plNotifyBtn">
+          Notify Me
+        </button>
+        <p
+          id="plAlreadySubscribed"
+          style="
+            display: none;
+            margin-top: var(--space-sm);
+            font-size: 0.9rem;
+            color: var(--rust);
+            font-style: italic;
+          "
+        >
+          You're already on the list — we'll be in touch when PistonLink is
+          ready.
+        </p>
+      </div>
+    </section>
+
+    <!-- include: partials/_footer.html -->
+  </body>
+</html>

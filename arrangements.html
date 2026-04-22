@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Browse all hymn arrangements by Garrett Nelson — solo piano, organ, ragtime, mashup, and alternate versions."
+    />
+    <title>Arrangements — Nelson Arrangements</title>
+    <link rel="icon" type="image/png" href="/images/piano.png" />
+    <link rel="stylesheet" href="/src/css/main.css" />
+  </head>
+  <body>
+    <!-- include: partials/_nav.html -->
+
+    <section
+      class="hero"
+      style="padding-block: var(--space-lg) var(--space-md)"
+    >
+      <div class="container">
+        <p class="hero-eyebrow">All Arrangements</p>
+        <h1>The <em>catalog</em></h1>
+        <p>
+          10 arrangements across 5 styles. Filter below or browse everything.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: var(--space-lg)">
+      <div class="container">
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="solo-piano">
+            Solo Piano
+          </button>
+          <button class="filter-btn" data-filter="organ">Organ</button>
+          <button class="filter-btn" data-filter="ragtime">Ragtime</button>
+          <button class="filter-btn" data-filter="mashup">Mashup</button>
+          <button class="filter-btn" data-filter="alternate">Alternate</button>
+        </div>
+
+        <div class="arrangement-grid" id="arrangementsGrid">
+          <!-- Solo Piano -->
+          <a
+            class="arrangement-card"
+            data-category="solo-piano"
+            href="https://www.youtube.com/watch?v=UDVmK5Petsw"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="arrangement-card__thumb">
+              <img
+                src="https://img.youtube.com/vi/UDVmK5Petsw/hqdefault.jpg"
+                alt="Abide With Me"
+                loading="lazy"
+              />
+              <div class="arrangement-card__play">&#9654;</div>
+            </div>
+            <div class="arrangement-card__body">
+              <span class="card-tag">Solo Piano</span>
+              <h3>Abide With Me</h3>
+            </div>
+          </a>
+
+          <a
+            class="arrangement-card"
+            data-category="solo-piano"
+            href="https://www.youtube.com/watch?v=WP9j4WNHqrs"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="arrangement-card__thumb">
+              <img
+                src="https://img.youtube.com/vi/WP9j4WNHqrs/hqdefault.jpg"
+                alt="I Know That My Redeemer Lives"
+                loading="lazy"
+              />
+              <div class="arrangement-card__play">&#9654;</div>
+            </div>
+            <div class="arrangement-card__body">
+              <span class="card-tag">Solo Piano</span>
+              <h3>I Know That My Redeemer Lives</h3>
+            </div>
+          </a>
+
+          <a
+            class="arrangement-card"
+            data-category="solo-piano"
+            href="https://www.youtube.com/watch?v=uWme2sMEzCI"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="arrangement-card__thumb">
+              <img
+                src="https://img.youtube.com/vi/uWme2sMEzCI/hqdefault.jpg"
+                alt="How Great the Wisdom and Love"
+                loading="lazy"
+              />
+              <div class="arrangement-card__play">&#9654;</div>
+            </div>
+            <div class="arrangement-card__body">
+              <span class="card-tag">Solo Piano</span>
+              <h3>How Great the Wisdom and Love</h3>
+            </div>
+          </a>
+
+          <!-- Ragtime -->
+          <a
+            class="arrangement-card"
+            data-category="ragtime"
+            href="https://www.youtube.com/watch?v=vM-GsFXo-WM"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="arrangement-card__thumb">
+              <img
+                src="https://img.youtube.com/vi/vM-GsFXo-WM/hqdefault.jpg"
+                alt="High on the Mountain Top"
+                loading="lazy"
+              />
+              <div class="arrangement-card__play">&#9654;</div>
+            </div>
+            <div class="arrangement-card__body">
+              <span class="card-tag">Ragtime</span>
+              <h3>High on the Mountain Top</h3>
+            </div>
+          </a>
+
+          <a
+            class="arrangement-card"
+            data-category="ragtime"
+            href="https://www.youtube.com/watch?v=T4zLGgQKTzo"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="arrangement-card__thumb">
+              <img
+                src="https://img.youtube.com/vi/T4zLGgQKTzo/hqdefault.jpg"
+                alt="Let Us All Press On"
+                loading="lazy"
+              />
+              <div class="arrangement-card__play">&#9654;</div>
+            </div>
+            <div class="arrangement-card__body">
+              <span class="card-tag">Ragtime</span>
+              <h3>Let Us All Press On</h3>
+            </div>
+          </a>
+
+          <a
+            class="arrangement-card"
+            data-category="ragtime"
+            href="https://www.youtube.com/watch?v=LHdwj9tfdJY"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="arrangement-card__thumb">
+              <img
+                src="https://img.youtube.com/vi/LHdwj9tfdJY/hqdefault.jpg"
+                alt="God Be With You Till We Meet Again"
+                loading="lazy"
+              />
+              <div class="arrangement-card__play">&#9654;</div>
+            </div>
+            <div class="arrangement-card__body">
+              <span class="card-tag">Ragtime</span>
+              <h3>God Be With You 'Till We Meet Again</h3>
+            </div>
+          </a>
+
+          <a
+            class="arrangement-card"
+            data-category="ragtime"
+            href="https://www.youtube.com/watch?v=e9hlX6m4zY4"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="arrangement-card__thumb">
+              <img
+                src="https://img.youtube.com/vi/e9hlX6m4zY4/hqdefault.jpg"
+                alt="The Lord Is My Light"
+                loading="lazy"
+              />
+              <div class="arrangement-card__play">&#9654;</div>
+            </div>
+            <div class="arrangement-card__body">
+              <span class="card-tag">Ragtime</span>
+              <h3>The Lord Is My Light</h3>
+            </div>
+          </a>
+
+          <!-- Organ -->
+          <a
+            class="arrangement-card"
+            data-category="organ"
+            href="https://www.youtube.com/watch?v=C5WWkeGw-Fg"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="arrangement-card__thumb">
+              <img
+                src="https://img.youtube.com/vi/C5WWkeGw-Fg/hqdefault.jpg"
+                alt="O Thou Rock of Our Salvation"
+                loading="lazy"
+              />
+              <div class="arrangement-card__play">&#9654;</div>
+            </div>
+            <div class="arrangement-card__body">
+              <span class="card-tag">Organ</span>
+              <h3>O Thou Rock of Our Salvation</h3>
+            </div>
+          </a>
+
+          <a
+            class="arrangement-card"
+            data-category="organ"
+            href="https://www.youtube.com/watch?v=O9sI_3i4FhQ"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="arrangement-card__thumb">
+              <img
+                src="https://img.youtube.com/vi/O9sI_3i4FhQ/hqdefault.jpg"
+                alt="Guide Us O Thou Great Jehovah"
+                loading="lazy"
+              />
+              <div class="arrangement-card__play">&#9654;</div>
+            </div>
+            <div class="arrangement-card__body">
+              <span class="card-tag">Organ</span>
+              <h3>Guide Us, O Thou Great Jehovah</h3>
+            </div>
+          </a>
+
+          <!-- Mashup -->
+          <a
+            class="arrangement-card"
+            data-category="mashup"
+            href="https://www.youtube.com/watch?v=6zMCi3MPeMQ"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="arrangement-card__thumb">
+              <img
+                src="https://img.youtube.com/vi/6zMCi3MPeMQ/hqdefault.jpg"
+                alt="In Christ Alone and I Believe In Christ"
+                loading="lazy"
+              />
+              <div class="arrangement-card__play">&#9654;</div>
+            </div>
+            <div class="arrangement-card__body">
+              <span class="card-tag">Mashup</span>
+              <h3>In Christ Alone &amp; I Believe In Christ</h3>
+            </div>
+          </a>
+
+          <!-- Alternate -->
+          <a
+            class="arrangement-card"
+            data-category="alternate"
+            href="https://www.youtube.com/watch?v=_HoD1KCeOMs"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="arrangement-card__thumb">
+              <img
+                src="https://img.youtube.com/vi/_HoD1KCeOMs/hqdefault.jpg"
+                alt="Jesus the Very Thought of Thee"
+                loading="lazy"
+              />
+              <div class="arrangement-card__play">&#9654;</div>
+            </div>
+            <div class="arrangement-card__body">
+              <span class="card-tag">Alternate</span>
+              <h3>Jesus, the Very Thought of Thee</h3>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- include: partials/_footer.html -->
+  </body>
+</html>

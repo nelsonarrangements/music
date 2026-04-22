@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nelson Arrangements — Design Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a1a1a;
+      font-family: sans-serif;
+      padding: 2rem 1rem;
+    }
+
+    .page-title {
+      text-align: center;
+      color: #fff;
+      font-family: sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      opacity: 0.5;
+    }
+
+    /* ─── OPTION WRAPPER ───────────────────────────────────── */
+    .option-block {
+      max-width: 900px;
+      margin: 0 auto 4rem auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+
+    .option-label {
+      text-align: center;
+      color: #fff;
+      font-family: sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      opacity: 0.4;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       OPTION 1 — DARK & REFINED
+    ═══════════════════════════════════════════════════════════ */
+    .opt1 {
+      --bg:       #0d1117;
+      --bg2:      #161b22;
+      --gold:     #c9a84c;
+      --gold-dim: #a07c2e;
+      --text:     #e8e8e8;
+      --muted:    #8b949e;
+      --border:   rgba(201,168,76,0.15);
+      --heading:  'Playfair Display', Georgia, serif;
+      --body:     'Inter', system-ui, sans-serif;
+      background: var(--bg);
+    }
+
+    .opt1 nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .opt1 .brand {
+      font-family: var(--heading);
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+
+    .opt1 .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .opt1 .nav-links a {
+      font-family: var(--body);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .opt1 .nav-links a:hover,
+    .opt1 .nav-links a.active { color: var(--gold); }
+
+    .opt1 .hero {
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      background: var(--bg);
+    }
+
+    .opt1 .hero-eyebrow {
+      font-family: var(--body);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+
+    .opt1 .hero h1 {
+      font-family: var(--heading);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .opt1 .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .opt1 .hero p {
+      font-family: var(--body);
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+
+    .opt1 .btn-primary {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: var(--gold);
+      color: var(--bg);
+      font-family: var(--body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+    }
+
+    .opt1 .btn-ghost {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: var(--body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      margin-left: 1rem;
+    }
+
+    .opt1 .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-top: 1px solid var(--border);
+    }
+
+    .opt1 .card {
+      background: var(--bg2);
+      padding: 1.75rem;
+    }
+
+    .opt1 .card-tag {
+      font-family: var(--body);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .opt1 .card h3 {
+      font-family: var(--heading);
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .opt1 .card p {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       OPTION 2 — LIGHT & AIRY
+    ═══════════════════════════════════════════════════════════ */
+    .opt2 {
+      --bg:       #faf8f4;
+      --bg2:      #f2ede6;
+      --rust:     #8b4513;
+      --rust-lt:  #b05a20;
+      --text:     #2c2c2c;
+      --muted:    #7a6a5a;
+      --border:   #e0d8ce;
+      --heading:  'Cormorant Garamond', Georgia, serif;
+      --body:     'Source Sans 3', system-ui, sans-serif;
+      background: var(--bg);
+    }
+
+    .opt2 nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .opt2 .brand {
+      font-family: var(--heading);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--rust);
+      letter-spacing: 0.02em;
+    }
+
+    .opt2 .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .opt2 .nav-links a {
+      font-family: var(--body);
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .opt2 .nav-links a:hover,
+    .opt2 .nav-links a.active { color: var(--rust); }
+
+    .opt2 .hero {
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      background: var(--bg);
+    }
+
+    .opt2 .hero-eyebrow {
+      font-family: var(--body);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .opt2 .hero h1 {
+      font-family: var(--heading);
+      font-size: 3.5rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .opt2 .hero h1 em {
+      font-style: italic;
+      color: var(--rust);
+    }
+
+    .opt2 .hero p {
+      font-family: var(--body);
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 2rem;
+      line-height: 1.75;
+    }
+
+    .opt2 .btn-primary {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: var(--rust);
+      color: #fff;
+      font-family: var(--body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .opt2 .btn-ghost {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      border: 1.5px solid var(--rust);
+      color: var(--rust);
+      font-family: var(--body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-left: 1rem;
+    }
+
+    .opt2 .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      padding: 2rem;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+
+    .opt2 .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+    }
+
+    .opt2 .card-tag {
+      font-family: var(--body);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.5rem;
+    }
+
+    .opt2 .card h3 {
+      font-family: var(--heading);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .opt2 .card p {
+      font-family: var(--body);
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       OPTION 3 — CLEAN MINIMAL
+    ═══════════════════════════════════════════════════════════ */
+    .opt3 {
+      --bg:       #ffffff;
+      --bg2:      #f7f7f7;
+      --ink:      #1a1a2e;
+      --gold:     #e8b84b;
+      --text:     #111111;
+      --muted:    #666666;
+      --border:   #e5e5e5;
+      --heading:  'DM Serif Display', Georgia, serif;
+      --body:     'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+    }
+
+    .opt3 nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      background: var(--bg);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .opt3 .brand {
+      font-family: var(--heading);
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+
+    .opt3 .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .opt3 .nav-links a {
+      font-family: var(--body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .opt3 .nav-links a:hover { color: var(--ink); }
+    .opt3 .nav-links a.active {
+      color: var(--ink);
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 2px;
+    }
+
+    .opt3 .hero {
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      background: var(--bg);
+    }
+
+    .opt3 .hero-eyebrow {
+      display: inline-block;
+      font-family: var(--body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--gold);
+      padding: 0.2rem 0.75rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .opt3 .hero h1 {
+      font-family: var(--heading);
+      font-size: 3.25rem;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .opt3 .hero h1 em {
+      font-style: italic;
+    }
+
+    .opt3 .hero p {
+      font-family: var(--body);
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 2rem;
+      line-height: 1.75;
+    }
+
+    .opt3 .btn-primary {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: var(--ink);
+      color: #fff;
+      font-family: var(--body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .opt3 .btn-ghost {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      border: 1.5px solid var(--ink);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-left: 1rem;
+    }
+
+    .opt3 .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 2px solid var(--ink);
+    }
+
+    .opt3 .card {
+      background: var(--bg2);
+      padding: 1.75rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .opt3 .card:last-child { border-right: none; }
+
+    .opt3 .card-tag {
+      font-family: var(--body);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .opt3 .card h3 {
+      font-family: var(--heading);
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .opt3 .card p {
+      font-family: var(--body);
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .opt3 .card-accent {
+      display: inline-block;
+      width: 2rem;
+      height: 3px;
+      background: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+  <p class="page-title">Nelson Arrangements — Design Direction Preview</p>
+
+  <!-- ─── OPTION 1 ─── -->
+  <p class="option-label">Option 1 — Dark &amp; Refined</p>
+  <div class="option-block opt1">
+    <nav>
+      <span class="brand">Nelson Arrangements</span>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#">Arrangements</a></li>
+        <li><a href="#">Sheet Music</a></li>
+        <li><a href="#">Learn</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </nav>
+    <div class="hero">
+      <p class="hero-eyebrow">Hymn Arrangements for Piano &amp; Organ</p>
+      <h1>Music that <em>elevates</em><br>the sacred.</h1>
+      <p>Original arrangements of beloved hymns — from contemplative solo piano to full organ, ragtime, and beyond.</p>
+      <a href="#" class="btn-primary">Browse Arrangements</a>
+      <a href="#" class="btn-ghost">Watch on YouTube</a>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <p class="card-tag">Solo Piano</p>
+        <h3>High on the Mountain Top</h3>
+        <p>A flowing, expressive solo arrangement with inner voice movement throughout.</p>
+      </div>
+      <div class="card">
+        <p class="card-tag">Ragtime</p>
+        <h3>Come, Come Ye Saints</h3>
+        <p>Syncopated and joyful — a ragtime take on the beloved pioneer hymn.</p>
+      </div>
+      <div class="card">
+        <p class="card-tag">Organ</p>
+        <h3>Praise to the Man</h3>
+        <p>Full organ voicing with plenum registration for a bold, majestic sound.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── OPTION 2 ─── -->
+  <p class="option-label">Option 2 — Light &amp; Airy</p>
+  <div class="option-block opt2">
+    <nav>
+      <span class="brand">Nelson Arrangements</span>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#">Arrangements</a></li>
+        <li><a href="#">Sheet Music</a></li>
+        <li><a href="#">Learn</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </nav>
+    <div class="hero">
+      <p class="hero-eyebrow">Hymn Arrangements for Piano &amp; Organ</p>
+      <h1>Music that <em>elevates</em><br>the sacred.</h1>
+      <p>Original arrangements of beloved hymns — from contemplative solo piano to full organ, ragtime, and beyond.</p>
+      <a href="#" class="btn-primary">Browse Arrangements</a>
+      <a href="#" class="btn-ghost">Watch on YouTube</a>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <p class="card-tag">Solo Piano</p>
+        <h3>High on the Mountain Top</h3>
+        <p>A flowing, expressive solo arrangement with inner voice movement throughout.</p>
+      </div>
+      <div class="card">
+        <p class="card-tag">Ragtime</p>
+        <h3>Come, Come Ye Saints</h3>
+        <p>Syncopated and joyful — a ragtime take on the beloved pioneer hymn.</p>
+      </div>
+      <div class="card">
+        <p class="card-tag">Organ</p>
+        <h3>Praise to the Man</h3>
+        <p>Full organ voicing with plenum registration for a bold, majestic sound.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── OPTION 3 ─── -->
+  <p class="option-label">Option 3 — Clean Minimal</p>
+  <div class="option-block opt3">
+    <nav>
+      <span class="brand">Nelson Arrangements</span>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#">Arrangements</a></li>
+        <li><a href="#">Sheet Music</a></li>
+        <li><a href="#">Learn</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </nav>
+    <div class="hero">
+      <p class="hero-eyebrow">Hymn Arrangements for Piano &amp; Organ</p>
+      <h1>Music that <em>elevates</em><br>the sacred.</h1>
+      <p>Original arrangements of beloved hymns — from contemplative solo piano to full organ, ragtime, and beyond.</p>
+      <a href="#" class="btn-primary">Browse Arrangements</a>
+      <a href="#" class="btn-ghost">Watch on YouTube</a>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <span class="card-accent"></span>
+        <p class="card-tag">Solo Piano</p>
+        <h3>High on the Mountain Top</h3>
+        <p>A flowing, expressive solo arrangement with inner voice movement throughout.</p>
+      </div>
+      <div class="card">
+        <span class="card-accent"></span>
+        <p class="card-tag">Ragtime</p>
+        <h3>Come, Come Ye Saints</h3>
+        <p>Syncopated and joyful — a ragtime take on the beloved pioneer hymn.</p>
+      </div>
+      <div class="card">
+        <span class="card-accent"></span>
+        <p class="card-tag">Organ</p>
+        <h3>Praise to the Man</h3>
+        <p>Full organ voicing with plenum registration for a bold, majestic sound.</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
