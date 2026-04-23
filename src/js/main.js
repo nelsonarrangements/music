@@ -9,7 +9,19 @@ const navLinks = document.querySelector('.nav-links')
 if (toggle && navLinks) {
   toggle.addEventListener('click', () => {
     const isOpen = navLinks.classList.toggle('open')
+    toggle.classList.toggle('open', isOpen)
     toggle.setAttribute('aria-expanded', isOpen)
+  })
+}
+
+// Back to top
+const backToTop = document.querySelector('.back-to-top')
+if (backToTop) {
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('visible', window.scrollY > 400)
+  }, { passive: true })
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   })
 }
 

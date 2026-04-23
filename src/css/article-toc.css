@@ -1,0 +1,130 @@
+/* ─── Article TOC Layout ──────────────────────────── */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Offset anchor targets so fixed nav doesn't cover headings */
+.article-body h1,
+.article-body h2,
+.article-body h3 {
+  scroll-margin-top: 6rem;
+}
+
+/* Two-column layout: sidebar + content */
+.article-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xl);
+}
+
+/* ─── Sidebar ─────────────────────────────────────── */
+
+.article-toc {
+  width: 200px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 5rem;
+  padding-top: var(--space-md);
+}
+
+.toc-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: var(--space-sm);
+}
+
+/* Progress track + nav side by side */
+.toc-inner {
+  display: flex;
+  align-items: stretch;
+  gap: 0.85rem;
+}
+
+.toc-progress-track {
+  width: 2px;
+  background: var(--border);
+  border-radius: 2px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.toc-progress-fill {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 0%;
+  background: var(--rust);
+  border-radius: 2px;
+  /* No transition — scroll events at 60fps are smooth enough on their own */
+}
+
+/* ─── TOC Nav Links ───────────────────────────────── */
+
+.toc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.toc-link {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-light);
+  text-decoration: none;
+  line-height: 1.35;
+  transition: color var(--transition);
+  padding: 0.1rem 0;
+}
+
+.toc-link:hover {
+  color: var(--text);
+}
+
+.toc-link.is-active {
+  color: var(--rust);
+  font-weight: 600;
+}
+
+/* h3 links are indented and slightly smaller */
+.toc-link--h3 {
+  font-size: 0.75rem;
+  padding-left: 0.7rem;
+}
+
+/* ─── Content column ──────────────────────────────── */
+
+.article-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Center article body and downloads within the content column */
+.article-layout .article-body {
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+.article-layout .article-downloads {
+  max-width: 640px;
+  margin-inline: auto;
+  margin-bottom: var(--space-xl);
+}
+
+/* ─── Mobile: collapse sidebar ────────────────────── */
+
+@media (max-width: 900px) {
+  .article-layout {
+    display: block;
+  }
+
+  .article-toc {
+    display: none;
+  }
+}
