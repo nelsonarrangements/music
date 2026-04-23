@@ -48,6 +48,7 @@ export default defineConfig({
         creativeHymnPlaying: resolve(__dirname, 'creative-hymn-playing.html'),
         itsNotAPiano:        resolve(__dirname, 'its-not-a-piano.html'),
         pistonlink:          resolve(__dirname, 'pistonlink.html'),
+        contact:             resolve(__dirname, 'contact.html'),
       }
     }
   }
