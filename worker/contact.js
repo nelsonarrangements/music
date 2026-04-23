@@ -19,18 +19,26 @@
 const ALLOWED_ORIGINS = [
   'https://nelsonarrangements.com',
   'https://www.nelsonarrangements.com',
-  // remove the line below before going to production:
+  // Local dev — remove both before going to production if you want to lock it down fully
+  'http://localhost:5173',
   'http://localhost:5174',
 ];
 
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
+    const allowed = ALLOWED_ORIGINS.includes(origin);
+
     const corsHeaders = {
-      'Access-Control-Allow-Origin': ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
+      'Access-Control-Allow-Origin': allowed ? origin : ALLOWED_ORIGINS[0],
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     };
+
+    // Reject requests from origins not in the allowlist
+    if (!allowed) {
+      return new Response('Forbidden', { status: 403, headers: corsHeaders });
+    }
 
     // Handle CORS preflight
     if (request.method === 'OPTIONS') {
@@ -48,7 +56,12 @@ export default {
       return json({ error: 'Invalid JSON' }, 400, corsHeaders);
     }
 
-    const { name, email, type, hymn, event: eventDetail, message } = data;
+    const { name, email, type, hymn, event: eventDetail, message, _hp } = data;
+
+    // Honeypot — bots fill hidden fields, humans don't
+    if (_hp) {
+      return json({ success: true }, 200, corsHeaders); // silently discard
+    }
 
     if (!name?.trim() || !email?.trim() || !type?.trim()) {
       return json({ error: 'Name, email, and inquiry type are required.' }, 400, corsHeaders);

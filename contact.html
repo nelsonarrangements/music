@@ -59,6 +59,11 @@
 
         <!-- Right: inquiry form -->
         <form class="contact-form" id="contactForm" novalidate>
+          <!-- Honeypot: hidden from humans, bots fill it and get silently discarded -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;">
+            <label for="_hp">Leave this empty</label>
+            <input type="text" id="_hp" name="_hp" tabindex="-1" autocomplete="off" />
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label for="contactName">Name</label>
@@ -166,14 +171,13 @@
         .addEventListener("submit", async (e) => {
           e.preventDefault();
 
-          const name = document.getElementById("contactName").value.trim();
+          const name  = document.getElementById("contactName").value.trim();
           const email = document.getElementById("contactEmail").value.trim();
-          const type = typeSelect.value;
-          const hymn = document.getElementById("contactHymn").value.trim();
+          const type  = typeSelect.value;
+          const hymn  = document.getElementById("contactHymn").value.trim();
           const event = document.getElementById("contactEvent").value.trim();
-          const message = document
-            .getElementById("contactMessage")
-            .value.trim();
+          const message = document.getElementById("contactMessage").value.trim();
+          const _hp   = document.getElementById("_hp").value;
 
           submitBtn.disabled = true;
           submitBtn.textContent = "Sending…";
@@ -183,7 +187,7 @@
             const res = await fetch(CONTACT_ENDPOINT, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ name, email, type, hymn, event, message }),
+              body: JSON.stringify({ name, email, type, hymn, event, message, _hp }),
             });
 
             if (res.ok) {

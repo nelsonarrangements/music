@@ -15,7 +15,7 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser.
+Open `http://localhost:5173` in your browser (Vite's default; pass `--port 5174` to use 5174).
 
 ## Scripts
 
@@ -47,6 +47,10 @@ Website 3.0/
 ├── creative-hymn-playing.html
 ├── its-not-a-piano.html
 ├── pistonlink.html
+├── contact.html
+├── worker/
+│   └── contact.js       # Cloudflare Worker — handles contact form → Resend
+├── wrangler.toml
 └── vite.config.js
 ```
 
