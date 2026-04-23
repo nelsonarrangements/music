@@ -46,6 +46,7 @@ export default defineConfig({
         learn:             resolve(__dirname, 'learn.html'),
         registrationBasics:  resolve(__dirname, 'registration-basics.html'),
         creativeHymnPlaying: resolve(__dirname, 'creative-hymn-playing.html'),
+        itsNotAPiano:        resolve(__dirname, 'its-not-a-piano.html'),
         pistonlink:          resolve(__dirname, 'pistonlink.html'),
       }
     }
