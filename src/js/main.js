@@ -1,3 +1,5 @@
+import './article-toc.js'
+
 // Footer year
 const yearEl = document.querySelector('.footer-year')
 if (yearEl) yearEl.textContent = new Date().getFullYear()
