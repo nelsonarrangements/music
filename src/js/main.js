@@ -75,6 +75,17 @@ nlClose?.addEventListener('click', closeNewsletterModal)
 nlBackdrop?.addEventListener('click', closeNewsletterModal)
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNewsletterModal() })
 
+// Inline signup forms — prefill modal and open it
+document.querySelectorAll('.inline-signup__form').forEach(form => {
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    const emailVal = form.querySelector('input[type="email"]').value
+    const modalEmail = nlModal?.querySelector('input[type="email"]')
+    if (modalEmail) modalEmail.value = emailVal
+    openNewsletterModal()
+  })
+})
+
 // PistonLink notify button
 const plNotifyBtn = document.getElementById('plNotifyBtn')
 if (plNotifyBtn) {

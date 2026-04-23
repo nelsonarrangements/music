@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Get in touch with Nelson Arrangements — arrangement requests, workshop inquiries, commission interest, and general questions."
+    />
+    <title>Contact — Nelson Arrangements</title>
+    <link rel="icon" type="image/png" href="/images/piano.png" />
+    <link rel="stylesheet" href="/src/css/main.css" />
+  </head>
+  <body>
+    <!-- include: partials/_nav.html -->
+
+    <section
+      class="hero"
+      style="padding-block: var(--space-lg) var(--space-md)"
+    >
+      <div class="container">
+        <p class="hero-eyebrow">Get in Touch</p>
+        <h1>Contact &amp; <em>Requests</em></h1>
+        <p>
+          Arrangement requests, workshop inquiries, commission interest, or just
+          a question — reach out below.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: var(--space-lg)">
+      <div class="container contact-layout">
+        <!-- Left: contact info -->
+        <div class="contact-info">
+          <div class="contact-info__item">
+            <span class="contact-info__label">YouTube</span>
+            <span class="contact-info__value">
+              <a
+                href="https://www.youtube.com/@NelsonArrangements"
+                target="_blank"
+                rel="noopener"
+                >@NelsonArrangements</a
+              >
+            </span>
+          </div>
+
+          <p style="margin-top: var(--space-lg)">
+            I read every message. Response times vary — typically within a few
+            days. For arrangement requests or commissions, more detail upfront
+            means a faster, more useful reply.
+          </p>
+
+          <p>
+            <strong>Workshops</strong> are available for ward musicians, youth
+            programs, and stake events. Include your location and a rough date
+            range and I'll get back to you.
+          </p>
+        </div>
+
+        <!-- Right: inquiry form -->
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contactName">Name</label>
+              <input
+                type="text"
+                id="contactName"
+                name="name"
+                placeholder="Your name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="contactEmail">Email</label>
+              <input
+                type="email"
+                id="contactEmail"
+                name="email"
+                placeholder="your@email.com"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contactType">Type of Inquiry</label>
+            <select id="contactType" name="type" required>
+              <option value="" disabled selected>Select one…</option>
+              <option value="Arrangement Request">Arrangement Request</option>
+              <option value="Workshop Inquiry">Workshop Inquiry</option>
+              <option value="Commission Interest">Commission Interest</option>
+              <option value="General Question">General Question</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="arrangementFields" style="display: none">
+            <label for="contactHymn">Hymn / Piece Requested</label>
+            <input
+              type="text"
+              id="contactHymn"
+              name="hymn"
+              placeholder="e.g. Come, Come, Ye Saints"
+            />
+            <p class="contact-form__hint">
+              Include the hymn number if known. Mention any style preferences
+              (ragtime, solo piano, organ, etc.).
+            </p>
+          </div>
+
+          <div class="form-group" id="workshopFields" style="display: none">
+            <label for="contactEvent">Event / Audience</label>
+            <input
+              type="text"
+              id="contactEvent"
+              name="event"
+              placeholder="e.g. Stake music training, ~30 ward organists"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="contactMessage">Message</label>
+            <textarea
+              id="contactMessage"
+              name="message"
+              placeholder="Any additional details…"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary contact-form__submit">
+            Send Message
+          </button>
+
+          <div class="contact-form__feedback" id="contactFeedback" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- include: partials/_footer.html -->
+
+    <script>
+      // Replace this with your deployed Worker URL after running: wrangler deploy
+      const CONTACT_ENDPOINT =
+        "https://nelson-contact.nelson-contact.workers.dev";
+
+      // Show/hide conditional fields based on inquiry type
+      const typeSelect = document.getElementById("contactType");
+      const arrangementFields = document.getElementById("arrangementFields");
+      const workshopFields = document.getElementById("workshopFields");
+      const submitBtn = document.querySelector(".contact-form__submit");
+      const feedback  = document.getElementById("contactFeedback");
+
+      function showFeedback(msg, isError) {
+        feedback.textContent = msg;
+        feedback.className = "contact-form__feedback " + (isError ? "contact-form__feedback--error" : "contact-form__feedback--success");
+      }
+
+      typeSelect.addEventListener("change", () => {
+        arrangementFields.style.display =
+          typeSelect.value === "Arrangement Request" ? "" : "none";
+        workshopFields.style.display =
+          typeSelect.value === "Workshop Inquiry" ? "" : "none";
+      });
+
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const name = document.getElementById("contactName").value.trim();
+          const email = document.getElementById("contactEmail").value.trim();
+          const type = typeSelect.value;
+          const hymn = document.getElementById("contactHymn").value.trim();
+          const event = document.getElementById("contactEvent").value.trim();
+          const message = document
+            .getElementById("contactMessage")
+            .value.trim();
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Sending…";
+          feedback.className = "contact-form__feedback";
+
+          try {
+            const res = await fetch(CONTACT_ENDPOINT, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name, email, type, hymn, event, message }),
+            });
+
+            if (res.ok) {
+              showFeedback("Message sent! I'll be in touch within a few days.", false);
+              submitBtn.textContent = "Sent!";
+              submitBtn.style.background = "var(--rust-dark)";
+              e.target.reset();
+              arrangementFields.style.display = "none";
+              workshopFields.style.display = "none";
+            } else {
+              const { error } = await res.json().catch(() => ({}));
+              showFeedback(error || "Something went wrong. Please try again.", true);
+              submitBtn.disabled = false;
+              submitBtn.textContent = "Send Message";
+            }
+          } catch {
+            showFeedback(
+              "Could not reach the server. Please email contact@nelsonarrangements.com directly.",
+              true
+            );
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Send Message";
+          }
+        });
+    </script>
+  </body>
+</html>
