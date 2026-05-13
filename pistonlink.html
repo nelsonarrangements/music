@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="PistonLink — the iPadOS and iOS app that takes the guesswork out of organ stop registration."
+      content="PistonLink — the iPadOS and iOS app that builds, saves, and deploys organ stop registrations directly to your Rodgers organ over MIDI."
     />
     <title>PistonLink — Nelson Arrangements</title>
     <link rel="icon" type="image/png" href="/images/piano.png" />
@@ -13,11 +13,11 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://nelsonarrangements.com/pistonlink.html" />
     <meta property="og:title" content="PistonLink — Nelson Arrangements" />
-    <meta property="og:description" content="PistonLink — the iPadOS and iOS app that takes the guesswork out of organ stop registration." />
+    <meta property="og:description" content="PistonLink — the iPadOS and iOS app that builds, saves, and deploys organ stop registrations directly to your Rodgers organ over MIDI." />
     <meta property="og:image" content="https://nelsonarrangements.com/images/piano.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="PistonLink — Nelson Arrangements" />
-    <meta name="twitter:description" content="PistonLink — the iPadOS and iOS app that takes the guesswork out of organ stop registration." />
+    <meta name="twitter:description" content="PistonLink — the iPadOS and iOS app that builds, saves, and deploys organ stop registrations directly to your Rodgers organ over MIDI." />
     <meta name="twitter:image" content="https://nelsonarrangements.com/images/piano.png" />
     <link rel="stylesheet" href="/src/css/main.css" />
   </head>
@@ -33,13 +33,17 @@
             alt="PistonLink app icon"
             class="pl-icon"
           />
-          <p class="hero-eyebrow">Coming Soon &mdash; iPadOS &amp; iOS</p>
+          <p class="hero-eyebrow">iPadOS &amp; iOS</p>
           <h1>Piston<em>Link</em></h1>
           <p>
-            The app that takes the guesswork out of organ stop registration —
-            built for the bench, not the manual.
+            Build named registration profiles, deploy them to your Rodgers organ
+            over MIDI, and turn pages without lifting your hands from the keys.
           </p>
-          <span class="pl-badge">Pending Publish to Apple App Store</span>
+          <div class="hero-actions">
+            <a href="/pistonlink-guide.html" class="btn btn-primary">View User Guide</a>
+            <button class="btn btn-outline" id="plNotifyBtnHero">Notify Me When Available</button>
+          </div>
+          <span class="pl-badge">Pending App Store Publication</span>
           <a href="/pistonlink-privacy.html" style="font-size: 0.8rem; color: var(--text-light); margin-top: var(--space-xs); display: block;">Privacy Policy</a>
         </div>
       </div>
@@ -48,57 +52,86 @@
     <!-- Features -->
     <section class="section section--alt">
       <div class="container">
-        <p class="section-label">What it does</p>
+        <p class="section-label">What PistonLink does</p>
         <h2 class="section-title">
           Everything you need at the <em>console</em>
         </h2>
 
         <div class="pl-features">
           <div class="pl-feature">
+            <span class="pl-feature__icon">🎛</span>
             <div>
               <h3>Registration Profiles</h3>
               <p>
-                Create and save named registration profiles that capture the
-                full stop state across General and Divisional pistons for the
-                Great, Swell, and Pedal divisions. Deploy them directly to the
-                organ's memory slots via MIDI SysEx — no more guessing at the
-                console.
+                Build named registration schemes with stop assignments across all ten
+                General pistons — G1 through G10 — for Great, Swell, and Pedal.
+                Name them anything ("Fast Sunday," "Christmas," "Closing Hymn") and
+                every configuration you've ever built is a tap away.
               </p>
             </div>
           </div>
 
           <div class="pl-feature">
+            <span class="pl-feature__icon">⚡</span>
             <div>
-              <h3>Registrant Library</h3>
+              <h3>Direct MIDI Deployment</h3>
               <p>
-                A built-in library of curated stop suggestions for LDS hymns,
-                with verse-by-verse variations. Browse a hymn, find the right
-                sound for each verse, and save it straight to any organ profile
-                — ready for Sunday.
+                Connect a MIDI adapter and tap Deploy. PistonLink writes your
+                registrations directly to the organ's physical memory pistons over
+                MIDI SysEx — the same as programming them at the console, but in
+                seconds. Your profiles live in the organ even after you close the app.
               </p>
             </div>
           </div>
 
           <div class="pl-feature">
+            <span class="pl-feature__icon">📖</span>
+            <div>
+              <h3>Curated Registrations Library</h3>
+              <p>
+                A built-in library of stop suggestions for LDS hymns, organized by
+                hymn number and style — verse-by-verse, general, pyramid, and ladder.
+                Save any suggestion directly into a new or existing profile in one tap.
+                Covers both the 1985 Hymnal and the 2025 <em>For Home and Church</em> collection.
+              </p>
+            </div>
+          </div>
+
+          <div class="pl-feature">
+            <span class="pl-feature__icon">👁</span>
             <div>
               <h3>Hands-Free Page Turns</h3>
               <p>
-                Import any PDF into the built-in sheet music library and turn
-                pages without lifting your hands from the keys. Winking with the
-                right eye advances the page, and the left eye goes back —
-                keeping you in the music where you belong.
+                Turn sheet music pages with a wink — right eye advances, left eye
+                goes back. Powered by ARKit on iPad, calibrated to your face.
+                No video is ever stored or transmitted; detection runs entirely
+                on-device and lives only as long as the gesture takes.
               </p>
             </div>
           </div>
 
           <div class="pl-feature">
+            <span class="pl-feature__icon">📄</span>
             <div>
-              <h3>MIDI SysEx Integration</h3>
+              <h3>Sheet Music Library &amp; Setlists <span class="pl-ipad-badge">iPad</span></h3>
               <p>
-                Built around the Rodgers 790C as its first supported organ,
-                PistonLink communicates directly with the instrument over MIDI,
-                writing your saved registrations to the organ's own memory
-                pistons with a tap.
+                Import any PDF from Files or Mail, organize scores into setlists for
+                each service, annotate with Apple Pencil, and link any score to a
+                registration profile. Export your entire library as an archive for
+                backup or transfer to another device.
+              </p>
+            </div>
+          </div>
+
+          <div class="pl-feature">
+            <span class="pl-feature__icon">🔗</span>
+            <div>
+              <h3>Profile Sharing</h3>
+              <p>
+                Export any profile as a <code>.pistonlink</code> file and share it
+                via AirDrop, Mail, or Messages. Recipients tap the file and it imports
+                directly — no account required. Share a polished Christmas set with
+                every organist in your stake in seconds.
               </p>
             </div>
           </div>
@@ -106,7 +139,160 @@
       </div>
     </section>
 
-    <!-- CTA -->
+    <!-- How It Works -->
+    <section class="section">
+      <div class="container">
+        <p class="section-label">How it works</p>
+        <h2 class="section-title">From the app to the <em>organ</em></h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">01</div>
+            <div class="step-body">
+              <h3>Build Your Profile</h3>
+              <p>
+                Open the Console, select a piston, and tap stops to toggle them on.
+                Switch between Great, Swell, and Pedal — assignments for each division
+                are tracked independently. Stops are color-coded by family so your
+                registration is visible at a glance. A 20-step undo history keeps
+                experimentation low-risk.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <div class="step-body">
+              <h3>Connect a MIDI Adapter</h3>
+              <p>
+                Plug a USB or Bluetooth 5-pin DIN adapter into your device and the
+                organ's MIDI port. The app shows a live connection badge in the
+                navigation — green means the organ is reachable, and the Deploy
+                button stays disabled until an adapter is detected.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <div class="step-body">
+              <h3>Deploy to the Organ</h3>
+              <p>
+                Tap Deploy, choose a memory slot (M2, M3, or M4), and confirm.
+                The app steps through each piston in sequence, writing your stop
+                selections to the organ's own memory via MIDI SysEx. A SysEx preview
+                shows the exact data being sent for verification.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">04</div>
+            <div class="step-body">
+              <h3>Play</h3>
+              <p>
+                Sit down and press your pistons. What you built in the app is exactly
+                what the organ recalls — no guessing, no reprogramming from scratch,
+                no hoping the last organist left something usable.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Supported Instruments -->
+    <section class="section section--alt">
+      <div class="container">
+        <p class="section-label">Supported instruments</p>
+        <h2 class="section-title">Built for <em>Rodgers</em> organs</h2>
+        <p style="color: var(--text-light); max-width: 560px; line-height: 1.75; margin-bottom: var(--space-lg);">
+          PistonLink communicates with each organ via its manufacturer-specific MIDI
+          SysEx protocol, so every model requires explicit support. Currently
+          supported instruments:
+        </p>
+        <div class="pl-organ-list">
+          <div class="pl-organ-item">
+            <span class="pl-organ-check">✓</span>
+            <div>
+              <strong>Rodgers 790C</strong>
+              <span>Fully supported</span>
+            </div>
+          </div>
+          <div class="pl-organ-item">
+            <span class="pl-organ-check">✓</span>
+            <div>
+              <strong>Rodgers T788L</strong>
+              <span>Fully supported</span>
+            </div>
+          </div>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.75; margin-top: var(--space-lg);">
+          Support for additional models is actively planned. If your instrument isn't
+          listed, reach out through the
+          <a href="/contact.html?type=PistonLink" style="color: var(--rust);">contact form</a>
+          — select <strong>PistonLink</strong> as the inquiry type and describe your organ.
+        </p>
+      </div>
+    </section>
+
+    <!-- Documentation CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="pl-guide-banner">
+          <div class="pl-guide-banner__text">
+            <p class="section-label">Documentation</p>
+            <h2>Everything in the app, <em>documented</em></h2>
+            <p>
+              The complete user guide covers every feature — from setting up your
+              first organ to deploying profiles, browsing the hymn library, and
+              calibrating hands-free page turning. Everything you need to get
+              the most out of PistonLink.
+            </p>
+          </div>
+          <div class="pl-guide-banner__actions">
+            <a href="/pistonlink-guide.html" class="btn btn-primary">Read the User Guide</a>
+            <a href="/registration-basics.html" class="btn btn-outline">Organ Registration Basics</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="faq-layout">
+          <div class="faq-intro">
+            <p class="section-label">Questions</p>
+            <h2 class="section-title">Common <em>questions</em></h2>
+          </div>
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>What MIDI adapter do I need?</summary>
+              <p>Any USB or Bluetooth 5-pin DIN MIDI adapter works. Common options include the Roland UM-ONE (wired) and the CME WIDI Master (Bluetooth wireless). The app shows a live connection badge so you'll know immediately whether it detected the adapter.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Does PistonLink work on iPhone?</summary>
+              <p>Yes — building profiles, deploying registrations, and browsing the curated hymn library all work on iPhone. The sheet music Library, Setlists, hands-free page turning, and Apple Pencil annotation are iPad-only, since they rely on the larger screen and iPad-specific hardware.</p>
+            </details>
+            <details class="faq-item">
+              <summary>What happens to my registrations if I lose my phone?</summary>
+              <p>Nothing changes at the organ. Your registrations are written to the instrument's own memory, exactly as if you had programmed the pistons by hand at the console. The app is only needed to build and deploy profiles — once they're deployed, they live in the organ indefinitely.</p>
+            </details>
+            <details class="faq-item">
+              <summary>What hymn collections are in the library?</summary>
+              <p>The built-in library covers the LDS Hymnal (1985) and the newer <em>For Home and Church</em> (2025) collection. Each hymn includes verse-by-verse, general, pyramid, and ladder registration styles.</p>
+            </details>
+            <details class="faq-item">
+              <summary>How does hands-free page turning work?</summary>
+              <p>On iPad, PistonLink uses the TrueDepth camera and Apple's ARKit framework to detect eye winks. A right wink advances the page; a left wink goes back. Before first use, a short calibration step tunes the detection threshold to your face. No video is ever recorded, stored, or transmitted — detection runs entirely on-device and only lives long enough to register the gesture.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Can I share profiles with other organists?</summary>
+              <p>Yes. Profiles export as <code>.pistonlink</code> files you can send via AirDrop, Mail, or Messages. Recipients tap the file to import it directly — no account, no setup. Useful for sharing a carefully-built Christmas set with everyone in your stake, or backing up your work to a new device.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notify CTA -->
     <section class="section">
       <div class="container" style="text-align: center">
         <p class="hero-eyebrow">Stay in the loop</p>
@@ -122,13 +308,11 @@
             line-height: 1.7;
           "
         >
-          PistonLink is pending publish to the Apple App Store. Subscribe to
-          the Nelson Arrangements newsletter and you'll hear about it the
-          moment it's available.
+          PistonLink is pending publication on the Apple App Store. Subscribe to
+          the Nelson Arrangements newsletter and you'll hear about it the moment
+          it's available.
         </p>
-        <button class="btn btn-primary" id="plNotifyBtn">
-          Notify Me
-        </button>
+        <button class="btn btn-primary" id="plNotifyBtn">Notify Me</button>
         <p
           id="plAlreadySubscribed"
           style="
@@ -139,8 +323,7 @@
             font-style: italic;
           "
         >
-          You're already on the list — we'll be in touch when PistonLink is
-          ready.
+          You're already on the list — we'll be in touch when PistonLink is ready.
         </p>
       </div>
     </section>

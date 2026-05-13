@@ -575,6 +575,118 @@
   .pl-features { grid-template-columns: 1fr; }
 }
 
+.pl-ipad-badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 100px;
+  vertical-align: middle;
+  margin-left: 0.4rem;
+}
+
+.pl-organ-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: 420px;
+}
+
+.pl-organ-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.pl-organ-check {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2d6a4f;
+  background: rgba(45, 106, 79, 0.1);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pl-organ-item strong {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--text);
+  display: block;
+}
+
+.pl-organ-item span {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.pl-guide-banner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-xl);
+  align-items: center;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+}
+
+.pl-guide-banner__text .section-label {
+  margin-bottom: var(--space-xs);
+}
+
+.pl-guide-banner__text h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: var(--space-sm);
+}
+
+.pl-guide-banner__text h2 em {
+  font-style: italic;
+  color: var(--rust);
+}
+
+.pl-guide-banner__text p {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+.pl-guide-banner__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+@media (max-width: 800px) {
+  .pl-guide-banner {
+    grid-template-columns: 1fr;
+    padding: var(--space-lg);
+  }
+  .pl-guide-banner__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
 /* ─── About Page ──────────────────────────────────── */
 
 .about-layout {

@@ -86,13 +86,25 @@ document.querySelectorAll('.inline-signup__form').forEach(form => {
   })
 })
 
-// PistonLink notify button
+// PistonLink notify buttons
 const plNotifyBtn = document.getElementById('plNotifyBtn')
 if (plNotifyBtn) {
   plNotifyBtn.addEventListener('click', () => {
     if (localStorage.getItem('na_subscribed')) {
       plNotifyBtn.style.display = 'none'
       document.getElementById('plAlreadySubscribed').style.display = 'block'
+    } else {
+      openNewsletterModal()
+    }
+  })
+}
+
+const plNotifyBtnHero = document.getElementById('plNotifyBtnHero')
+if (plNotifyBtnHero) {
+  plNotifyBtnHero.addEventListener('click', () => {
+    if (localStorage.getItem('na_subscribed')) {
+      plNotifyBtnHero.textContent = "You're on the list!"
+      plNotifyBtnHero.disabled = true
     } else {
       openNewsletterModal()
     }
