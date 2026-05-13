@@ -49,6 +49,7 @@ export default defineConfig({
         itsNotAPiano:        resolve(__dirname, 'its-not-a-piano.html'),
         pistonlink:          resolve(__dirname, 'pistonlink.html'),
         pistonlinkPrivacy:   resolve(__dirname, 'pistonlink-privacy.html'),
+        pistonlinkGuide:     resolve(__dirname, 'pistonlink-guide.html'),
         contact:             resolve(__dirname, 'contact.html'),
       }
     }
