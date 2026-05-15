@@ -21,7 +21,156 @@
 <body>
 
   <!-- include: partials/_nav.html -->
+<!-- PistonLink Announcement Banner -->
+<!-- Place this immediately after <!-- include: partials/_nav.html --> -->
+<div class="pistonlink-banner" id="pistonlink-banner">
+  <div class="pistonlink-banner__inner">
+    <div class="pistonlink-banner__left">
+      <img
+        src="/images/pistonlink-icon.png"
+        alt="PistonLink app icon"
+        class="pistonlink-banner__icon"
+        width="36"
+        height="36"
+      />
+      <div class="pistonlink-banner__text">
+        <span class="pistonlink-banner__title">
+          <strong>Piston</strong><em>Link</em> is now available on the App Store
+        </span>
+        <span class="pistonlink-banner__sub">
+          Registration profiles &amp; MIDI control for Rodgers organs &middot; iPadOS &amp; iOS
+        </span>
+      </div>
+    </div>
+    <div class="pistonlink-banner__right">
+      <a href="/pistonlink.html" class="pistonlink-banner__cta">Learn more &rarr;</a>
+      <button
+        class="pistonlink-banner__dismiss"
+        aria-label="Dismiss banner"
+        onclick="
+          document.getElementById('pistonlink-banner').style.display='none';
+          localStorage.setItem('pistonlink-banner-dismissed', '1');
+        "
+      >&times;</button>
+    </div>
+  </div>
+</div>
+ 
+<script>
+  if (localStorage.getItem('pistonlink-banner-dismissed') === '1') {
+    document.getElementById('pistonlink-banner').style.display = 'none';
+  }
+</script>
+ 
+<!-- Add to main.css -->
+<style>
+.pistonlink-banner {
+  background: #f7f0e3;
+  border-bottom: 1px solid #cfc099;
+  width: 100%;
+}
+ 
+.pistonlink-banner__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+ 
+.pistonlink-banner__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+ 
+.pistonlink-banner__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+ 
+.pistonlink-banner__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+ 
+.pistonlink-banner__title {
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  color: #2e2212;
+  white-space: nowrap;
+}
+ 
+.pistonlink-banner__title strong {
+  font-weight: normal;
+}
+ 
+.pistonlink-banner__title em {
+  color: #b5722a;
+  font-style: italic;
+}
+ 
+.pistonlink-banner__sub {
+  font-size: 11px;
+  color: #7a6535;
+  font-family: Georgia, serif;
+}
+ 
+.pistonlink-banner__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+ 
+.pistonlink-banner__cta {
+  background: #1c1409;
+  color: #e8d5a8;
+  text-decoration: none;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-family: Georgia, serif;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+ 
+.pistonlink-banner__cta:hover {
+  opacity: 0.85;
+}
+ 
+.pistonlink-banner__dismiss {
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  color: #9b8c6a;
+  cursor: pointer;
+  padding: 0 2px;
+}
+ 
+.pistonlink-banner__dismiss:hover {
+  color: #2e2212;
+}
+ 
+@media (max-width: 600px) {
+  .pistonlink-banner__sub {
+    display: none;
+  }
+  .pistonlink-banner__title {
+    white-space: normal;
+  }
+}
+</style>
 
+  
   <!-- Hero -->
   <section class="hero">
     <div class="container">
