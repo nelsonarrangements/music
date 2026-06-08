@@ -780,6 +780,11 @@
   background: var(--bg3);
 }
 
+.sheet-badge--pistonlink {
+    color: #5b4fcf;
+    background: rgba(91, 79, 207, 0.1);
+  }
+
 .arrangement-card__actions {
   display: flex;
   gap: var(--space-xs);
