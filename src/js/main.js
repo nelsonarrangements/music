@@ -132,3 +132,23 @@ if (banner && !localStorage.getItem(BANNER_KEY)) {
     banner.classList.remove('visible')
   })
 }
+
+document.querySelectorAll('a[download][href$=".pistonlink"]').forEach(link => {
+    link.addEventListener('click', async e => {
+      e.preventDefault()
+      try {
+        const res = await fetch(link.href)
+        const blob = await res.blob()
+        const url = URL.createObjectURL(new Blob([blob], { type: 'application/octet-stream' }))
+        const a = document.createElement('a')
+        a.href = url
+        a.download = link.href.split('/').pop()
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+      } catch {
+        window.location.href = link.href
+      }
+    })
+  })
