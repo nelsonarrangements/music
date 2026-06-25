@@ -133,6 +133,15 @@ if (banner && !localStorage.getItem(BANNER_KEY)) {
   })
 }
 
+// MailerLite success callback — must be global so webforms.min.js can call it
+window.ml_webform_success_40292344 = function () {
+  localStorage.setItem('na_subscribed', '1')
+  const form = document.querySelector('.ml-subscribe-form-40292344')
+  if (!form) return
+  form.querySelector('.row-success').style.display = 'block'
+  form.querySelector('.nl-modal__form').style.display = 'none'
+}
+
 document.querySelectorAll('a[download][href$=".pistonlink"]').forEach(link => {
     link.addEventListener('click', async e => {
       e.preventDefault()

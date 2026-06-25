@@ -19,9 +19,6 @@
 const ALLOWED_ORIGINS = [
   'https://nelsonarrangements.com',
   'https://www.nelsonarrangements.com',
-  // Local dev — remove both before going to production if you want to lock it down fully
-  'http://localhost:5173',
-  'http://localhost:5174',
 ];
 
 export default {
