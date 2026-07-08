@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' https://www.google.com https://www.gstatic.com https://recaptcha.google.com https://groot.mailerlite.com https://assets.mailerlite.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://img.youtube.com https://developer.apple.com https://www.gstatic.com; frame-src https://www.youtube-nocookie.com https://www.google.com https://recaptcha.google.com; connect-src 'self' https://assets.mailerlite.com https://nelson-contact.nelson-contact.workers.dev; form-action 'self' https://assets.mailerlite.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self';"
+          "value": "default-src 'self'; script-src 'self' https://www.google.com https://www.gstatic.com https://recaptcha.google.com https://groot.mailerlite.com https://assets.mailerlite.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://img.youtube.com https://developer.apple.com https://www.gstatic.com; frame-src https://www.youtube-nocookie.com https://www.google.com https://recaptcha.google.com https://challenges.cloudflare.com; connect-src 'self' https://assets.mailerlite.com https://nelson-contact.nelson-contact.workers.dev https://challenges.cloudflare.com; form-action 'self' https://assets.mailerlite.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self';"
         },
         {
           "key": "X-Frame-Options",

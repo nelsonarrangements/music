@@ -51,6 +51,7 @@ export default defineConfig({
         pistonlinkPrivacy:   resolve(__dirname, 'pistonlink-privacy.html'),
         pistonlinkGuide:     resolve(__dirname, 'pistonlink-guide.html'),
         contact:             resolve(__dirname, 'contact.html'),
+        privacy:             resolve(__dirname, 'privacy.html'),
       }
     }
   }
