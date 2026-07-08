@@ -53,11 +53,25 @@ export default {
       return json({ error: 'Invalid JSON' }, 400, corsHeaders);
     }
 
-    const { name, email, type, hymn, event: eventDetail, message, _hp } = data;
+    const { name, email, type, hymn, event: eventDetail, message, _hp, 'cf-turnstile-response': turnstileToken } = data;
 
     // Honeypot — bots fill hidden fields, humans don't
     if (_hp) {
       return json({ success: true }, 200, corsHeaders); // silently discard
+    }
+
+    // Verify Cloudflare Turnstile token
+    if (!turnstileToken) {
+      return json({ error: 'Bot verification token missing.' }, 400, corsHeaders);
+    }
+    const tsRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret: env.TURNSTILE_SECRET_KEY, response: turnstileToken }),
+    });
+    const tsData = await tsRes.json();
+    if (!tsData.success) {
+      return json({ error: 'Bot verification failed. Please try again.' }, 400, corsHeaders);
     }
 
     if (!name?.trim() || !email?.trim() || !type?.trim()) {

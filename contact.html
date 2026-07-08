@@ -20,6 +20,7 @@
     <meta name="twitter:description" content="Get in touch with Nelson Arrangements — arrangement requests, workshop inquiries, commission interest, and general questions." />
     <meta name="twitter:image" content="https://nelsonarrangements.com/images/piano.png" />
     <link rel="stylesheet" href="/src/css/main.css" />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit" async defer></script>
   </head>
   <body>
     <!-- include: partials/_nav.html -->
@@ -150,6 +151,9 @@
             ></textarea>
           </div>
 
+          <!-- Cloudflare Turnstile — invisible bot protection -->
+          <div id="cf-turnstile"></div>
+
           <button type="submit" class="btn btn-primary contact-form__submit">
             Send Message
           </button>
@@ -166,12 +170,17 @@
       const CONTACT_ENDPOINT =
         "https://nelson-contact.nelson-contact.workers.dev";
 
-      // Show/hide conditional fields based on inquiry type
+      // Replace with your Cloudflare Turnstile site key (invisible widget)
+      const TURNSTILE_SITE_KEY = "0x4AAAAAADyBpI7jfvX_os25";
+
       const typeSelect = document.getElementById("contactType");
       const arrangementFields = document.getElementById("arrangementFields");
       const workshopFields = document.getElementById("workshopFields");
       const submitBtn = document.querySelector(".contact-form__submit");
       const feedback  = document.getElementById("contactFeedback");
+
+      let turnstileWidgetId = null;
+      let pendingSubmitData = null;
 
       function showFeedback(msg, isError) {
         feedback.textContent = msg;
@@ -192,51 +201,82 @@
         if (match) { typeSelect.value = preselect; updateConditionalFields(); }
       }
 
+      // Render the invisible Turnstile widget once the API script loads
+      window.onloadTurnstileCallback = function () {
+        turnstileWidgetId = turnstile.render("#cf-turnstile", {
+          sitekey: TURNSTILE_SITE_KEY,
+          size: "invisible",
+          execution: "execute",
+          callback: onTurnstileSuccess,
+          "error-callback": onTurnstileError,
+          "expired-callback": function () { pendingSubmitData = null; },
+        });
+      };
+
+      async function onTurnstileSuccess(token) {
+        if (!pendingSubmitData) return;
+        const { name, email, type, hymn, event, message, _hp } = pendingSubmitData;
+        pendingSubmitData = null;
+
+        try {
+          const res = await fetch(CONTACT_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, type, hymn, event, message, _hp, "cf-turnstile-response": token }),
+          });
+
+          if (res.ok) {
+            showFeedback("Message sent! I'll be in touch within a few days.", false);
+            submitBtn.textContent = "Sent!";
+            submitBtn.style.background = "var(--rust-dark)";
+            document.getElementById("contactForm").reset();
+            arrangementFields.style.display = "none";
+            workshopFields.style.display = "none";
+          } else {
+            const { error } = await res.json().catch(() => ({}));
+            showFeedback(error || "Something went wrong. Please try again.", true);
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Send Message";
+          }
+        } catch {
+          showFeedback(
+            "Could not reach the server. Please email contact@nelsonarrangements.com directly.",
+            true
+          );
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Send Message";
+        }
+
+        turnstile.reset(turnstileWidgetId);
+      }
+
+      function onTurnstileError() {
+        pendingSubmitData = null;
+        showFeedback("Bot verification failed. Please try again.", true);
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send Message";
+      }
+
       document
         .getElementById("contactForm")
-        .addEventListener("submit", async (e) => {
+        .addEventListener("submit", function (e) {
           e.preventDefault();
 
-          const name  = document.getElementById("contactName").value.trim();
-          const email = document.getElementById("contactEmail").value.trim();
-          const type  = typeSelect.value;
-          const hymn  = document.getElementById("contactHymn").value.trim();
-          const event = document.getElementById("contactEvent").value.trim();
+          const name    = document.getElementById("contactName").value.trim();
+          const email   = document.getElementById("contactEmail").value.trim();
+          const type    = typeSelect.value;
+          const hymn    = document.getElementById("contactHymn").value.trim();
+          const event   = document.getElementById("contactEvent").value.trim();
           const message = document.getElementById("contactMessage").value.trim();
-          const _hp   = document.getElementById("_hp").value;
+          const _hp     = document.getElementById("_hp").value;
 
           submitBtn.disabled = true;
           submitBtn.textContent = "Sending…";
           feedback.className = "contact-form__feedback";
 
-          try {
-            const res = await fetch(CONTACT_ENDPOINT, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ name, email, type, hymn, event, message, _hp }),
-            });
-
-            if (res.ok) {
-              showFeedback("Message sent! I'll be in touch within a few days.", false);
-              submitBtn.textContent = "Sent!";
-              submitBtn.style.background = "var(--rust-dark)";
-              e.target.reset();
-              arrangementFields.style.display = "none";
-              workshopFields.style.display = "none";
-            } else {
-              const { error } = await res.json().catch(() => ({}));
-              showFeedback(error || "Something went wrong. Please try again.", true);
-              submitBtn.disabled = false;
-              submitBtn.textContent = "Send Message";
-            }
-          } catch {
-            showFeedback(
-              "Could not reach the server. Please email contact@nelsonarrangements.com directly.",
-              true
-            );
-            submitBtn.disabled = false;
-            submitBtn.textContent = "Send Message";
-          }
+          // Store form data; Turnstile callback will complete the submission
+          pendingSubmitData = { name, email, type, hymn, event, message, _hp };
+          turnstile.execute(turnstileWidgetId);
         });
     </script>
   </body>
