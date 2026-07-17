@@ -47,6 +47,7 @@ export default defineConfig({
         registrationBasics:  resolve(__dirname, 'registration-basics.html'),
         creativeHymnPlaying: resolve(__dirname, 'creative-hymn-playing.html'),
         itsNotAPiano:        resolve(__dirname, 'its-not-a-piano.html'),
+        handsFeetSpaceBetweenNotes: resolve(__dirname, 'hands-feet-space-between-notes.html'),
         pistonlink:          resolve(__dirname, 'pistonlink.html'),
         pistonlinkPrivacy:   resolve(__dirname, 'pistonlink-privacy.html'),
         pistonlinkGuide:     resolve(__dirname, 'pistonlink-guide.html'),
