@@ -51,7 +51,7 @@
 
             <p>If you have ever spent fifteen minutes at the organ console on a Saturday afternoon trying to get General 3 to sound like it did last Sunday — and then given up and just winged it — PistonLink was built for you. The app lets you build your registration profiles on your iPhone or iPad, name them, save them, and then send them directly to your Rodgers organ over MIDI in a matter of seconds. No more guessing, no more re-programming from scratch, no more showing up on Sunday hoping the previous organist left something usable on the pistons.</p>
 
-            <p>This guide walks through every feature in the app, from the very first time you open it to the more advanced things like hands-free page turning and sharing profiles with other organists.</p>
+            <p>This guide walks through every feature in the app, button by button, from the very first time you open it to the more advanced things like hands-free page turning and sharing profiles with other organists.</p>
 
             <h2>The Core Concepts</h2>
             <p>Before diving into the app itself, it helps to understand how PistonLink thinks about your organ. There are four building blocks, and everything in the app flows from these four things.</p>
@@ -60,7 +60,7 @@
             <p>An <strong>Organ</strong> in PistonLink represents a specific physical instrument. You might have one organ — your chapel's — or you might work at multiple buildings and have several. Each organ you add lives in the app independently with its own set of profiles. You give it a name ("Stake Center" or "Ward Chapel") and select its model, which tells the app exactly which stops are available and how to communicate with it.</p>
 
             <h3>Profile</h3>
-            <p>A <strong>Profile</strong> is a named, saved registration scheme for one organ. Think of it like a preset for an entire Sunday's worth of playing. "Fast Sunday," "Christmas," "Sacrament Meeting" — you build it once, save it, and it is there every time you need it. Each profile contains the stop assignments for all ten of your General pistons.</p>
+            <p>A <strong>Profile</strong> is a named, saved registration scheme for one organ. Think of it like a preset for an entire Sunday's worth of playing. "Fast Sunday," "Christmas," "Sacrament Meeting" — you build it once, save it, and it is there every time you need it. Each profile contains the stop assignments for all ten of your General pistons, plus a free-form notes field for the whole profile — handy for reminders like "use verse 3 registration for the descant" or "borrowed from Sister Hansen, thank her."</p>
 
             <h3>Piston</h3>
             <p>Each profile has ten <strong>Pistons</strong> — G1 through G10 — matching the General pistons on your physical console. Each piston holds whatever combination of stops you want assigned to it. Piston 1 might be your quiet, meditative prelude sound. Piston 5 might be your full principal chorus for the closing hymn. You decide.</p>
@@ -69,9 +69,9 @@
             <p>A <strong>Stop</strong> is an individual rank or coupler on the organ — Diapason 8, Oboe 8, Swell to Great, and so on. Stops are the raw ingredients. Pistons are the recipes. Profiles are the whole menu.</p>
 
             <h2>What You Need Before You Start</h2>
-            <p>PistonLink runs on iPhone and iPad. Most features work on both, but the Library and hands-free page turning are iPad-only — more on those later.</p>
+            <p>PistonLink runs on iPhone and iPad. Most features work identically on both — a few things (larger touch targets, an always-visible notes field, the Library and hands-free page turning) are iPad-only, and are called out as they come up below.</p>
 
-            <p>To actually deploy registrations to the organ, you will need a <strong>USB or Bluetooth to 5-pin DIN MIDI adapter</strong>. This is the cable that bridges your device and the MIDI port on the back of the organ. The app will detect whether one is connected before it lets you deploy, so if the deploy button appears disabled, that is almost certainly why. Common options include the Roland UM-ONE (wired) and the CME WIDI Master (Bluetooth wireless). Either works.</p>
+            <p>To actually deploy registrations to the organ, you will need <strong>two 5-pin DIN MIDI cables</strong> and a USB or Bluetooth MIDI adapter that bridges your device to those cables. This is important enough to get wrong that it is worth spelling out precisely: the connectors are <strong>crossed</strong>, not straight-through. Your adapter's Sequencer <strong>IN</strong> port connects to the organ interface's <strong>OUT</strong> port, and your adapter's Sequencer <strong>OUT</strong> port connects to the organ interface's <strong>IN</strong> port. If you plug IN to IN and OUT to OUT, the app will simply never see the organ. The app will detect whether a connection is present before it lets you deploy, so if the deploy button appears disabled, mis-wired cables are the most common cause. Common adapter options include the Roland UM-ONE (wired) and the CME WIDI Master (Bluetooth wireless). Either works.</p>
 
             <p><strong>Currently supported organ models:</strong></p>
             <ul>
@@ -81,31 +81,66 @@
 
             <p>Support for additional models is actively planned. If your organ is not on the list, its stops will not be available in the app and deployment will not be possible until it is supported. To begin the process of getting your organ added, reach out through the <a href="/contact.html?type=PistonLink">contact form</a> — select <strong>PistonLink</strong> as the inquiry type and describe your instrument.</p>
 
-            <h2>Setting Up Your First Organ</h2>
-            <p>When you open PistonLink for the first time, you will land on the <strong>Organs</strong> tab. This is your home base. Tap the add button in the top right, give your organ a name, and select its model from the list. That is it — your organ is in the app and ready for profiles.</p>
+            <h2>Finding Your Way Around</h2>
+            <p>PistonLink follows one consistent pattern everywhere, and once you recognize it, every screen in the app behaves the same way. On the Organs, Profiles, Console, and Library screens, you will see two icons on the right side of the top bar:</p>
 
-            <p>The Organs tab also shows a real-time <strong>MIDI connection badge</strong> in the navigation bar. A green indicator means an adapter is connected and the organ is reachable. If it is gray or absent, check your adapter connection before trying to deploy.</p>
+            <ul>
+              <li>A primary, always-visible action for that screen — <strong>+</strong> to add something new, or the up-arrow <strong>Deploy</strong> icon on the Console.</li>
+              <li>A <strong>•••</strong> (three dots) button, which opens a menu of everything else that screen can do — importing, selecting multiple items, opening Profile Info, and so on.</li>
+            </ul>
+
+            <p><strong>Settings and Help are always in that ••• menu</strong>, on every screen, no matter where you are in the app. If you are ever looking for something and cannot find it, tap ••• first — it is almost certainly there.</p>
+
+            <h2>Setting Up Your First Organ</h2>
+            <p>When you open PistonLink for the first time, you will land on the <strong>Organs</strong> tab. This is your home base. Tap the <strong>+</strong> icon in the top right, give your organ a name, and select its model from the list. That is it — your organ is in the app and ready for profiles. (If you have no organs added yet, you will also see a large "Add Your Organ" button in the middle of the screen — it does exactly the same thing.)</p>
+
+            <p>The Organs tab also shows a real-time <strong>MIDI connection indicator</strong> (a cable icon) in the top-left of the navigation bar. It turns green with a small dot when an adapter is connected and the organ is reachable; tap it for a quick confirmation. If it is gray, check your adapter and cable wiring before trying to deploy.</p>
+
+            <p>Tap <strong>•••</strong> in the top right for Help (a step-by-step walkthrough of the whole app), a link to this User Guide, and Settings. Long-press (or swipe, on some organs) any organ card to Rename it; swipe to Delete.</p>
 
             <p>You can add as many organs as you need. Each one maintains its own independent list of profiles, so your two buildings will never get mixed up.</p>
 
-            <h2>Building a Profile in the Console</h2>
-            <p>Tap an organ, then tap the <strong>+</strong> to create a new profile. Give it a name — something descriptive that will make sense to you six months from now — and you will be taken into the <strong>Console</strong>. This is where the real work happens.</p>
+            <h2>The Profile List</h2>
+            <p>Tap an organ to see its list of profiles. The <strong>+</strong> in the top left creates a new profile — give it a name and you are taken straight into the Console. On the top right, <strong>•••</strong> opens:</p>
 
-            <p>The Console shows you a row of ten piston buttons at the top (G1–G10), a division switcher for Great, Swell, and Pedal, and the full stop matrix for whichever division is selected. The interface is modeled on the physical layout of the console so it feels familiar the moment you sit down with it.</p>
+            <ul>
+              <li><strong>Select</strong> — appears once you have more than one profile. Lets you check off multiple profiles at once to share them together as a bundle, or to bulk-delete.</li>
+              <li><strong>Import Profile</strong> — bring in a <code>.pistonlink</code> file someone shared with you, or one you exported from another device.</li>
+              <li><strong>Edit</strong> — turns on reordering handles and delete circles for the whole list, the same as tapping Edit in a normal iOS list. Handy for cleaning up or reordering a long profile list all at once.</li>
+              <li><strong>Settings</strong> and <strong>Help</strong> — same as everywhere else in the app.</li>
+            </ul>
+
+            <p>Individual profile rows still support the swipe gestures you would expect: swipe left to Delete or Share, swipe right to Duplicate or Rename. A first-time tip card explains this the first time you land on the screen.</p>
+
+            <h2>Building a Profile in the Console</h2>
+            <p>Tapping a profile takes you into the <strong>Console</strong> — this is where the real work happens. At the top, you will see the back button on the far left, and directly next to it, the profile's name. If the organ has more than one profile, there is a small downward-facing chevron (in an outlined circle) right next to the name — more on that in a moment. On the right, the up-arrow <strong>Deploy</strong> icon sits next to <strong>•••</strong>.</p>
+
+            <p>Below that is a row of ten piston buttons (1–10), a division switcher for Great, Swell, and Pedal, and the full stop matrix for whichever division is selected. The interface is modeled on the physical layout of the console so it feels familiar the moment you sit down with it. On iPhone, if all ten pistons do not fit on screen at once, the row scrolls horizontally — just swipe left on the piston buttons to reach 8, 9, and 10.</p>
+
+            <h3>Switching Between Profiles Without Leaving the Console</h3>
+            <p>This is one of the more useful shortcuts in the app. If an organ has more than one profile, tap the small chevron next to the profile name at the top of the Console to open a quick-switch menu listing every other profile for that organ. Tap one and you are instantly viewing it — no need to back out to the profile list and tap back in. Useful when you want to quickly compare how G3 sounds between your "Sacrament Meeting" and "Fast Sunday" profiles.</p>
 
             <h3>Selecting Stops</h3>
-            <p>Tap a piston button to select it, then tap any stop in the matrix to toggle it on or off. Stops are color-coded by family so you can see your registration at a glance — blue for Principals, green for Flutes, orange for Reeds, purple for Strings, teal for Mixtures. A piston button that has at least one stop assigned will show a small indicator so you know it is not empty.</p>
+            <p>Tap a piston button to select it, then tap any stop in the matrix to toggle it on or off. Stops are color-coded by family so you can see your registration at a glance — blue for Principals, green for Flutes, orange for Reeds, purple for Strings, teal for Mixtures. A piston button that has at least one stop assigned will show a small dot beneath it so you know it is not empty. When you toggle a stop, you will feel a light haptic tap confirming the change.</p>
 
             <p>Switch between Great, Swell, and Pedal using the division switcher, and your stop assignments for each division are tracked independently. A single piston can have stops pulled across all three divisions simultaneously, just like on the real instrument.</p>
 
-            <h3>Undo</h3>
-            <p>The Console supports a <strong>20-level undo history</strong>. If you accidentally toggle the wrong stop, shake to undo or use the undo button in the toolbar. This has saved me more than once.</p>
+            <h3>The ••• Menu on the Console</h3>
+            <p>Tap <strong>•••</strong> in the top right of the Console for:</p>
+            <ul>
+              <li><strong>Select</strong> — enter select mode to choose specific pistons to deploy (see below), rather than the whole profile.</li>
+              <li><strong>Undo</strong> — steps back through a 20-level undo history. If you accidentally toggle the wrong stop, this is where to find it.</li>
+              <li><strong>Profile Info</strong> — set an author name and notes for the whole profile.</li>
+              <li><strong>Share</strong> — export this profile as a <code>.pistonlink</code> file.</li>
+              <li><strong>Notes</strong> (iPhone only) — a quick shortcut straight to the profile's notes field, without opening the full Profile Info form. On iPad, this same notes field is always visible, right below the stop grid, so there is no separate menu item for it there.</li>
+              <li><strong>Settings</strong> and <strong>Help</strong>.</li>
+            </ul>
 
             <h3>Working Across Pistons</h3>
-            <p>You do not have to build each piston from scratch. If G1 is close to what you want for G2, select G1, duplicate the piston, then make your adjustments. The profile editor also lets you rename, duplicate, and delete profiles from the Organ's profile list — so once you have a solid Sunday template, you can duplicate it and modify it for Christmas without starting over.</p>
+            <p>You do not have to build each piston from scratch. If G1 is close to what you want for G2, duplicate the profile from the profile list, then adjust only what is different. Once you have a solid Sunday template, duplicate it and modify it for Christmas without starting over.</p>
 
             <h2>Deploying to the Organ</h2>
-            <p>Once a profile is built, tap <strong>Deploy</strong> from the Console or profile list. This is the moment where the app sends your registrations to the physical instrument. Here is how the workflow goes:</p>
+            <p>Once a profile is built, tap the up-arrow <strong>Deploy</strong> icon at the top right of the Console. This is the moment where the app sends your registrations to the physical instrument. Here is how the workflow goes:</p>
 
             <ul>
               <li>Select which <strong>memory slot</strong> on the organ you want to write to (M2, M3, or M4). These correspond to the physical memory buttons on your console.</li>
@@ -115,7 +150,10 @@
 
             <p>The deploy screen also shows a <strong>SysEx Preview</strong> — the raw hexadecimal data being sent for each piston. Most people will never need to look at this, but if something is not writing correctly to the organ, this is the first place to check. It lets you verify the exact data being transmitted before and during deployment.</p>
 
-            <p>If no MIDI adapter is detected when you tap Deploy, the button will be disabled and the app will explain why. Connect your adapter, wait a moment for it to be recognized, and try again.</p>
+            <p>If no MIDI adapter is detected when you tap Deploy, the button will be disabled and the app will explain why. Double-check your cable wiring (see "What You Need Before You Start" above — it is easy to swap IN and OUT), wait a moment for the adapter to be recognized, and try again.</p>
+
+            <h3>Deploying Only Specific Pistons</h3>
+            <p>Sometimes you do not want to overwrite all ten pistons — maybe you only changed G3 and G7 since the last deploy, and the rest are already correct on the organ. Tap <strong>•••</strong> → <strong>Select</strong> on the Console to enter select mode. Tap each piston you want to include (only pistons with a registration assigned can be selected — empty ones are dimmed and cannot be picked). Use <strong>Select All</strong> or <strong>Deselect All</strong> at the bottom to speed this up, then tap <strong>Deploy N Selected</strong> to send only what you checked. This walks through the same memory-slot and Continue workflow as a full deploy, just limited to your chosen pistons.</p>
 
             <h2>The Registrations Tab</h2>
             <p>The <strong>Registrations</strong> tab is a built-in library of curated hymn registration suggestions. These are not user-created — they are carefully prepared starting points, organized by hymn and by organ model.</p>
@@ -146,36 +184,77 @@
             <p>The AI Hymn Registrant is available only on <strong>Apple devices that support Apple Intelligence</strong>; on unsupported hardware, the feature is hidden entirely. It is built to be purely privacy-focused: everything runs on-device, nothing you enter is logged or tracked, and no hymn information, usage data, or generated registration is ever shared with us or with Apple. It is off by default — see the <a href="/pistonlink-privacy.html">Privacy Policy</a> for details.</p>
 
             <h2>The Library and Setlists (iPad)</h2>
-            <p>On iPad, the <strong>Library</strong> tab is a full sheet music management system. You can import any PDF from Files, Mail, or any app that supports the standard iOS share sheet. Once imported, scores live in the app's library and stay there — organized, searchable, and ready for Sunday.</p>
+            <p>On iPad, the <strong>Library</strong> tab is a full sheet music management system. You can import any PDF from Files, Mail, or any app that supports the standard iOS share sheet — tap <strong>+</strong> in the top right and choose <strong>Import Score</strong>. Once imported, scores live in the app's library and stay there — organized, searchable, and ready for Sunday. Each score's row shows the page you last left off on, so you always know where you are before you even tap it.</p>
 
             <h3>Setlists</h3>
-            <p>Setlists let you group scores for a specific service or rehearsal. Create a setlist for "June 15 Sacrament Meeting," add the opening hymn, the sacrament hymn, and the intermediate, and everything you need is in one place in the right order. The app remembers the last page you were on for each score, so if you leave mid-rehearsal and come back, you are right where you left off.</p>
+            <p>Setlists let you group scores for a specific service or rehearsal so they read as one continuous document, in order. To create one, tap <strong>+</strong> → <strong>New Setlist</strong> and give it a name — "June 15 Sacrament Meeting," for example.</p>
 
-            <h3>Annotations</h3>
-            <p>PistonLink supports <strong>Apple Pencil annotation</strong> directly on imported scores. If you pencil in fingering, pedaling, or registration notes on paper, you can do the same thing here and it will be there every time you open that score.</p>
+            <p>Inside a setlist, tap <strong>Add from Library</strong> to expand a list of every score you have imported; tap the <strong>+</strong> next to any score to add it. Reorder scores by pressing and dragging the handle (three horizontal lines) on the left of each row; swipe left on a row to remove it from the setlist. When you are done, tap <strong>Save</strong> in the top right — though the app also saves your changes automatically if you simply leave the screen. Once a setlist has at least one score in it, tap the <strong>play</strong> button (top right) to open it as one continuous document in the reader, exactly like a single score.</p>
 
-            <h3>Linking Scores to Profiles</h3>
-            <p>You can link a score to a specific registration profile, so when you open the score, you have a direct reminder of which profile goes with it. Useful for those weeks when you are playing multiple instruments at multiple buildings and need everything clearly labeled.</p>
+            <h3>Reading a Score or Setlist</h3>
+            <p>Tap any score or setlist to open it. Tap the left third of the page to go back, the right two-thirds to go forward — plain, simple page turning with no menus in the way. Three icons sit in the toolbar at the top:</p>
+
+            <ul>
+              <li><strong>Annotate</strong> (pencil-tip icon) — turns on Apple Pencil markup directly on the page. This brings up Apple's own system tool palette — the same pen, highlighter, pencil, eraser, lasso, and color picker you would see in Notes or Freeform — so anything you already know about marking up a PDF with Pencil works here exactly the same way. Whatever you draw stays with that score and is there the next time you open it. Tap the icon again to turn annotation off and go back to page-turning-by-tap.</li>
+              <li><strong>Hands-Free</strong> (camera icon) — turns on wink-based page turning. See the next section for exactly how this works and how to calibrate it.</li>
+              <li><strong>Full Screen</strong> (expanding-arrows icon) — hides all toolbars and chrome for distraction-free reading on the stand. Tap the arrows icon in the top right of full-screen mode to exit back to the normal view. Annotation mode automatically turns off when you enter full screen.</li>
+            </ul>
 
             <h3>Exporting Your Library</h3>
-            <p>The entire Library — scores, setlists, and all — can be exported as a single archive file for backup or transfer to another device. This is especially handy when upgrading iPads.</p>
+            <p>The entire Library — scores, setlists, and all — can be exported as a single archive file for backup or transfer to another device. This is especially handy when upgrading iPads. In the Library, tap <strong>•••</strong> at the top right for Export Library, Import Library, Settings, and Help.</p>
 
             <h2>Hands-Free Page Turning (iPad)</h2>
             <p>This is the feature that tends to get the most surprised reactions. On iPad, PistonLink can turn sheet music pages using your face — specifically, by detecting eye winks through the TrueDepth camera. The idea is simple: your hands never leave the keys.</p>
+
+            <p>To turn it on, open any score or setlist in the reader and tap the <strong>camera icon</strong> in the top toolbar — it fills in solid once active. Once on:</p>
 
             <ul>
               <li><strong>Right wink</strong> → next page</li>
               <li><strong>Left wink</strong> → previous page</li>
             </ul>
 
-            <p>Before using it for the first time, the app walks you through a short <strong>calibration step</strong> that tunes the wink detection threshold to your specific face and blink habits. This is worth doing carefully — a well-calibrated threshold means the feature fires when you want it to and stays quiet the rest of the time. A poorly calibrated one will either miss your winks or trigger from normal blinking, neither of which is fun in the middle of a hymn.</p>
+            <p>The first time you turn it on, a help card appears explaining the gestures, with two buttons: <strong>Calibrate to Your Face</strong>, which walks you through the calibration described below, and <strong>Got It</strong>, which dismisses the card if you would rather calibrate later. A small reminder card stays pinned near the top of the screen while hands-free is active as a running reference — tap its "×" to dismiss it once you are comfortable.</p>
 
-            <p>No video is ever recorded, stored, or transmitted. The face tracking runs entirely on-device using Apple's ARKit framework and only lives long enough to detect the gesture.</p>
+            <h3>Calibrating Wink Detection</h3>
+            <p>Calibrating is worth doing carefully the first time — a well-tuned threshold means the feature fires when you want it to and stays quiet the rest of the time, while a poorly calibrated one will either miss your winks or trigger from normal blinking, neither of which is fun in the middle of a hymn. To calibrate (from the hands-free help card, tap <strong>Calibrate to Your Face</strong>; you can also re-run this any time from <strong>Settings → Recalibrate Face Gestures</strong>):</p>
+
+            <ol>
+              <li>Tap <strong>Begin</strong> on the introduction screen.</li>
+              <li><strong>Look Forward</strong> — look at the camera normally, without winking, for a few seconds while the app reads your resting baseline. A status message confirms your face is detected. Once enough data is captured, tap <strong>Continue</strong>.</li>
+              <li><strong>Wink Your Left Eye</strong> — wink the left eye a few times until the app registers a clear signal, then tap <strong>Continue</strong>.</li>
+              <li><strong>Wink Your Right Eye</strong> — same process for the right eye, then tap <strong>Continue</strong>.</li>
+              <li><strong>All Set</strong> — review the thresholds the app calculated, then tap <strong>Done</strong> to save them and close calibration.</li>
+            </ol>
+
+            <p>At any point during calibration, a <strong>Reset</strong> button in the top right lets you redo the current step if you were not happy with your winks, and <strong>Done</strong> in the top left lets you exit early without finishing. If the app asks for camera access and you are not sure, allow it — no video is ever recorded, stored, or transmitted; face tracking runs entirely on-device using Apple's ARKit framework and only lives long enough to detect the gesture. If you previously denied camera access, an alert will offer a direct link to the iOS Settings page to turn it on.</p>
 
             <h2>Sharing Profiles with Other Organists</h2>
             <p>Profiles are exported as <strong>.pistonlink files</strong> — a custom format that bundles one or more profiles together along with the organ model they belong to, and optionally an author name and notes. You share these via the standard iOS share sheet: AirDrop, Mail, Messages, or any other method you prefer.</p>
 
             <p>On the receiving end, tapping a .pistonlink file in Files or Mail will open it directly in PistonLink and add the profiles to your library. No setup required. This makes it easy to share a well-crafted Christmas profile with the other organists in your stake, or to back up your work and restore it on a new device.</p>
+
+            <p>If you want to share several profiles from the same organ at once as a single bundle, go to the profile list, tap <strong>•••</strong> → <strong>Select</strong>, check off the profiles you want, and tap Share from the bar at the bottom.</p>
+
+            <h2>Personalizing the App: Settings</h2>
+            <p>Settings is reachable from the <strong>•••</strong> menu on every main screen — Organs, Profiles, Console, and Library. It contains:</p>
+
+            <ul>
+              <li><strong>AI Hymn Registrant</strong> — the on/off toggle for the AI feature described above. Only shown on devices that support Apple Intelligence.</li>
+              <li><strong>Text Size</strong> — a Small / Default / Large / Extra Large picker that adjusts text size throughout the app, including stop names and piston numbers on the Console. This is separate from (and in addition to) the standard iOS text-size setting in the Settings app — see Accessibility below.</li>
+              <li><strong>Recalibrate Face Gestures</strong> (iPad only) — re-run the hands-free wink calibration if it stops detecting reliably, for example after a case change or a haircut.</li>
+              <li><strong>About</strong> — the current app version, and a link to rate PistonLink on the App Store.</li>
+            </ul>
+
+            <h2>Accessibility</h2>
+            <p>PistonLink is built to work well with the accessibility features already built into iOS and iPadOS. None of these are settings inside PistonLink itself — they live in your device's <strong>Settings app → Accessibility</strong>, and PistonLink automatically respects whichever ones you have turned on:</p>
+
+            <ul>
+              <li><strong>Reduce Motion</strong> — the Console's transitions (entering select mode, switching profiles) become instant instead of animated.</li>
+              <li><strong>Reduce Transparency</strong> — the frosted-glass backgrounds behind piston buttons, stop tiles, and toolbars switch to solid colors.</li>
+              <li><strong>Bold Text</strong> — stop names and piston numbers render in a heavier weight.</li>
+              <li><strong>VoiceOver</strong> — every piston button and stop tile has a full spoken label and state (for example, "Piston 3, has registration" or "Diapason 8, Principal, On"), so the Console can be operated fully by touch and voice for organists who are blind or have low vision.</li>
+              <li><strong>Larger Text / Dynamic Type</strong> — respected everywhere in the app except the Console's own stop names and piston numbers, which use the in-app Text Size setting described above instead, to avoid the fixed piston layout clipping at very large system text sizes.</li>
+            </ul>
 
             <h2>A Note on MIDI and What Is Happening Under the Hood</h2>
             <p>You do not need to understand any of this for the app to work. But for those who are curious: PistonLink communicates with Rodgers organs using <strong>MIDI System Exclusive (SysEx)</strong> messages — a protocol that lets software send custom, manufacturer-specific data directly to an instrument. Every stop on a supported Rodgers organ corresponds to a specific bit in a 34-byte data payload. When you tap Deploy, the app encodes your stop selections into that payload, calculates a Roland checksum to verify the message is well-formed, and sends it to the organ. The organ reads it and writes those stop states to whichever piston and memory slot you selected.</p>
