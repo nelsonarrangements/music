@@ -77,6 +77,10 @@
             <ul>
               <li>Rodgers 790C</li>
               <li>Rodgers T788L</li>
+              <li>Rodgers 751B</li>
+              <li>Rodgers 790B</li>
+              <li>Rodgers 795</li>
+              <li>Rodgers 835B</li>
             </ul>
 
             <p>Support for additional models is actively planned. If your organ is not on the list, its stops will not be available in the app and deployment will not be possible until it is supported. To begin the process of getting your organ added, reach out through the <a href="/contact.html?type=PistonLink">contact form</a> — select <strong>PistonLink</strong> as the inquiry type and describe your instrument.</p>
@@ -125,11 +129,25 @@
 
             <p>Switch between Great, Swell, and Pedal using the division switcher, and your stop assignments for each division are tracked independently. A single piston can have stops pulled across all three divisions simultaneously, just like on the real instrument.</p>
 
+            <h3>Voice Palette</h3>
+            <p>Some Rodgers organs let a single stop tab hide more than one voicing behind an "Alpha Dial" — the physical dial doubles a rank into two or more alternate voices sharing the same slot. PistonLink calls this the <strong>Voice Palette</strong>, and it is supported on the <strong>790C, T788L, 790B, 795, and 835B</strong>. The <strong>Rodgers 751B is the one organ in this family without Alpha Dial hardware</strong>, so it has no Voice Palette stops at all. Turning on an alternate voice always turns off the others sharing that slot (including the primary) — only one voice per slot can sound at a time, exactly as on the real console.</p>
+
+            <p>How you reach the alternates depends on a setting (<strong>Settings → Voice Palette Display</strong>, covered below):</p>
+            <ul>
+              <li><strong>Inline</strong> (the default) — a stop with alternates shows a small dot at its trailing edge. Tap the dot, or press and hold the stop card itself, to bring up the list of voices for that slot and pick one. The card flips to show whichever voice is currently selected. The first time you land on a Console using Inline mode, a one-time tip banner reminds you to "Hold a stop for alternate voices" — tap it, or tap anywhere else on the stop grid, to dismiss it for good.</li>
+              <li><strong>Bottom List</strong> — instead of living on the stop cards, every alternate voice for the current division is broken out into its own expandable <strong>Voice Palette</strong> section underneath the regular stop grid, with a palette icon. Tap to expand it and toggle voices there like any other stop tile.</li>
+            </ul>
+
+            <p>A small number of Voice Palette voices (on the 790C and T788L only) are flagged as unusually loud, solo-only sounds. Turning one on shows a temporary orange warning banner naming the stop, which fades away on its own after a few seconds — it is just a heads-up, not a block.</p>
+
+            <p>Because a piston stores which alternate you had selected for each slot (separately from whether that slot was on or off), recalling a piston later restores the exact voice you picked, not just the primary. If you ever want to undo a run of alternate-voice experiments across an entire profile, use <strong>Reset Voices</strong> in the Console's ••• menu (below) — it snaps every piston back to each slot's primary voice without touching any on/off states.</p>
+
             <h3>The ••• Menu on the Console</h3>
             <p>Tap <strong>•••</strong> in the top right of the Console for:</p>
             <ul>
               <li><strong>Select</strong> — enter select mode to choose specific pistons to deploy (see below), rather than the whole profile.</li>
               <li><strong>Undo</strong> — steps back through a 20-level undo history. If you accidentally toggle the wrong stop, this is where to find it.</li>
+              <li><strong>Reset Voices</strong> — reverts every piston in this profile back to the primary voice for any stop where a Voice Palette alternate was selected (see Voice Palette above). On/off states are left untouched — only which alternate is showing changes. Grayed out if no piston in the profile currently has an alternate selected. Asks for confirmation before applying, since it affects the whole profile at once.</li>
               <li><strong>Profile Info</strong> — set an author name and notes for the whole profile.</li>
               <li><strong>Share</strong> — export this profile as a <code>.pistonlink</code> file.</li>
               <li><strong>Notes</strong> (iPhone only) — a quick shortcut straight to the profile's notes field, without opening the full Profile Info form. On iPad, this same notes field is always visible, right below the stop grid, so there is no separate menu item for it there.</li>
@@ -140,12 +158,14 @@
             <p>You do not have to build each piston from scratch. If G1 is close to what you want for G2, duplicate the profile from the profile list, then adjust only what is different. Once you have a solid Sunday template, duplicate it and modify it for Christmas without starting over.</p>
 
             <h2>Deploying to the Organ</h2>
-            <p>Once a profile is built, tap the up-arrow <strong>Deploy</strong> icon at the top right of the Console. This is the moment where the app sends your registrations to the physical instrument. Here is how the workflow goes:</p>
+            <p>Once a profile is built, tap the up-arrow <strong>Deploy</strong> icon at the top right of the Console. This is the moment where the app sends your registrations to the physical instrument. It is important to understand what the app's SysEx message actually does: it draws the stops, exactly as if you had pulled them by hand — it does <strong>not</strong> save them to a piston on its own. Saving to a specific piston is still a manual step you do at the console, using the organ's own <strong>Set</strong> button, just as if you had programmed that piston without the app. Here is the full workflow:</p>
 
             <ul>
-              <li>Select which <strong>memory slot</strong> on the organ you want to write to (M2, M3, or M4). These correspond to the physical memory buttons on your console.</li>
-              <li>Tap <strong>Deploy to Organ</strong> and confirm the alert. The app sends G1's registration to the organ as a MIDI SysEx message, and the organ writes it to piston 1 in the selected memory slot.</li>
-              <li>If the profile has more pistons, you select the next piston on the physical organ and tap <strong>Continue</strong> in the app. The app steps through each piston in sequence until the full profile is deployed.</li>
+              <li>On the organ console, select the <strong>memory</strong> you want to program (M2, M3, or M4) and select the <strong>starting general piston</strong> you intend to save the first configured piston to. For a full ten-piston profile this is almost always General 1.</li>
+              <li>Nothing further is needed on the console yet — you do not need to hold Set or anything else before deploying.</li>
+              <li>In the app, tap <strong>Deploy to Organ</strong> and confirm the alert. The app sends the first configured piston's registration as a MIDI SysEx message, and the organ draws those stops immediately — you will see the stop indicators light up for the combination that was just sent.</li>
+              <li>On the console, press <strong>Set</strong> and then the piston button you selected in step one (for example, <strong>Set + General 1</strong>). This is what actually saves the drawn stops into that piston's memory. Skipping this step means the combination the app just sent is never saved — it will be overwritten the moment you move to another piston or draw different stops. PistonLink does not perform this Set + Piston press for you today; it is a manual step every time.</li>
+              <li>If the profile has more configured pistons, the app tells you which one is next. Physically select that piston on the organ console, then tap <strong>Continue</strong> in the app — this sends that piston's registration and lights up its stops. Press <strong>Set</strong> and the piston number again to save it, then tap Continue for the next one. Repeat this send-then-Set-and-save cycle for each remaining configured piston until the full profile is deployed. Empty pistons in the profile are skipped entirely; they are never sent and the organ's existing memory at that slot is left untouched.</li>
             </ul>
 
             <p>The deploy screen also shows a <strong>SysEx Preview</strong> — the raw hexadecimal data being sent for each piston. Most people will never need to look at this, but if something is not writing correctly to the organ, this is the first place to check. It lets you verify the exact data being transmitted before and during deployment.</p>
@@ -153,7 +173,7 @@
             <p>If no MIDI adapter is detected when you tap Deploy, the button will be disabled and the app will explain why. Double-check your cable wiring (see "What You Need Before You Start" above — it is easy to swap IN and OUT), wait a moment for the adapter to be recognized, and try again.</p>
 
             <h3>Deploying Only Specific Pistons</h3>
-            <p>Sometimes you do not want to overwrite all ten pistons — maybe you only changed G3 and G7 since the last deploy, and the rest are already correct on the organ. Tap <strong>•••</strong> → <strong>Select</strong> on the Console to enter select mode. Tap each piston you want to include (only pistons with a registration assigned can be selected — empty ones are dimmed and cannot be picked). Use <strong>Select All</strong> or <strong>Deselect All</strong> at the bottom to speed this up, then tap <strong>Deploy N Selected</strong> to send only what you checked. This walks through the same memory-slot and Continue workflow as a full deploy, just limited to your chosen pistons.</p>
+            <p>Sometimes you do not want to overwrite all ten pistons — maybe you only changed G3 and G7 since the last deploy, and the rest are already correct on the organ. Tap <strong>•••</strong> → <strong>Select</strong> on the Console to enter select mode. Tap each piston you want to include (only pistons with a registration assigned can be selected — empty ones are dimmed and cannot be picked). Use <strong>Select All</strong> or <strong>Deselect All</strong> at the bottom to speed this up, then tap <strong>Deploy N Selected</strong> to send only what you checked. This walks through the same memory, Set-and-save, and Continue workflow as a full deploy — remember to select the first piston in your chosen set on the organ console before tapping Deploy, and press Set + that piston number after each send, just as with a full deploy.</p>
 
             <h2>The Registrations Tab</h2>
             <p>The <strong>Registrations</strong> tab is a built-in library of curated hymn registration suggestions. These are not user-created — they are carefully prepared starting points, organized by hymn and by organ model.</p>
@@ -165,11 +185,7 @@
             <ul>
               <li><strong>Verse-by-Verse</strong> — A distinct registration for each verse of the hymn, with notes on the musical intent behind each change.</li>
               <li><strong>General</strong> — A single balanced registration to use for the entire hymn.</li>
-              <li><strong>Pyramid</strong> — A rich, layered registration built for fullness and congregational support.</li>
-              <li><strong>Ladder</strong> — A leaner, more transparent registration built for clarity and definition.</li>
             </ul>
-
-            <p>If you are not sure what Pyramid and Ladder mean in the context of registration philosophy, the <a href="/registration-basics.html">Organ Registration article</a> in the library covers both approaches in depth.</p>
 
             <h3>Saving a Suggestion to a Profile</h3>
             <p>Found a suggestion you want to use? You have two options. <strong>Save as Profile</strong> creates a brand new profile from the suggestion, mapping each verse to G1 through G10 automatically. <strong>Merge into Profile</strong> takes the suggestion's verse registrations and fills the empty piston slots in a profile you already have — so if G1–G4 are already set the way you like, the merge will start filling from G5 and leave yours untouched.</p>
@@ -240,6 +256,7 @@
 
             <ul>
               <li><strong>AI Hymn Registrant</strong> — the on/off toggle for the AI feature described above. Only shown on devices that support Apple Intelligence.</li>
+              <li><strong>Voice Palette Display</strong> — choose <strong>Inline</strong> or <strong>Bottom List</strong> for how alternate Voice Palette voices are surfaced on the Console (see Voice Palette above). Inline keeps alternates on their stop's own card, reached by holding the card or tapping its small dot; Bottom List keeps them in a separate expandable section below the stop grid instead. This has no effect on organs without Voice Palette stops, like the 751B.</li>
               <li><strong>Text Size</strong> — a Small / Default / Large / Extra Large picker that adjusts text size throughout the app, including stop names and piston numbers on the Console. This is separate from (and in addition to) the standard iOS text-size setting in the Settings app — see Accessibility below.</li>
               <li><strong>Recalibrate Face Gestures</strong> (iPad only) — re-run the hands-free wink calibration if it stops detecting reliably, for example after a case change or a haircut.</li>
               <li><strong>About</strong> — the current app version, and a link to rate PistonLink on the App Store.</li>
@@ -257,9 +274,9 @@
             </ul>
 
             <h2>A Note on MIDI and What Is Happening Under the Hood</h2>
-            <p>You do not need to understand any of this for the app to work. But for those who are curious: PistonLink communicates with Rodgers organs using <strong>MIDI System Exclusive (SysEx)</strong> messages — a protocol that lets software send custom, manufacturer-specific data directly to an instrument. Every stop on a supported Rodgers organ corresponds to a specific bit in a 34-byte data payload. When you tap Deploy, the app encodes your stop selections into that payload, calculates a Roland checksum to verify the message is well-formed, and sends it to the organ. The organ reads it and writes those stop states to whichever piston and memory slot you selected.</p>
+            <p>You do not need to understand any of this for the app to work. But for those who are curious: PistonLink communicates with Rodgers organs using <strong>MIDI System Exclusive (SysEx)</strong> messages — a protocol that lets software send custom, manufacturer-specific data directly to an instrument. Every stop on a supported Rodgers organ corresponds to a specific bit in a data payload. When you tap Deploy, the app encodes your stop selections into that payload, calculates a Roland checksum to verify the message is well-formed, and sends it to the organ. Critically, the message itself does not name a piston or memory slot, and it does not save anything — it simply draws stops, the same as if you had pulled them by hand. That is why selecting the right piston and memory on the organ beforehand, and then pressing Set + the piston number afterward to actually save the combination, are both the organist's responsibility rather than the app's.</p>
 
-            <p>The reason this matters to know — even briefly — is that it explains both the capability and the limitation. The app is not controlling the organ in real time. It is writing to its memory, the same way you would manually program a piston at the console. Once the deploy is done, the registration lives in the organ's own memory and will be there the next time you sit down to play, even without the app present.</p>
+            <p>The reason this matters to know — even briefly — is that it explains both the capability and the limitation. The app is not controlling the organ in real time, and it is not (yet) able to save a piston for you — it only draws stops, the same one step you would otherwise do by hand at the console. Saving what was drawn into a given piston's memory still requires you to press Set and that piston's button yourself. Once that Set press is done, the registration lives in the organ's own memory and will be there the next time you sit down to play, even without the app present.</p>
 
           </div>
 
