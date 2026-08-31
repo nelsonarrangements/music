@@ -75,11 +75,12 @@
 
             <p><strong>Currently supported organ models:</strong></p>
             <ul>
-              <li>Rodgers 790C, 790B, 795, 835B, 751B, T788L</li>
+              <li>Rodgers 790C, 790B, 795, 835B, 751A, 751B, T788</li>
+              <li>Johannus WM-44</li>
             </ul>
-            <p>In-app Voice Palette selection is available on the 790C, 790B, 795, 835B, and T788L. The 751B does not have Voice Palette. Encore (recording and playback, covered below) is currently supported on the 790C and T788L only.</p>
+            <p>In-app Voice Palette selection is available on the 790C, T788, 790B, 795, 835B, and 751A. The 751B is the one Rodgers organ in this family without Voice Palette, and Johannus has no equivalent feature. Encore (recording and playback, covered below) is supported on every model above except the 835B.</p>
 
-            <p>Johannus support is coming soon and is actively in development.</p>
+            <p>The Johannus WM-44 is PistonLink's first supported organ outside the Rodgers family — it speaks a different MIDI dialect (Program Change per stop, rather than Rodgers' bulk SysEx), but Deploy, the Console, and Encore all work the same way you'd expect from any other supported organ.</p>
 
             <p>Support for additional models is actively planned. If your organ is not on the list, its stops will not be available in the app and deployment will not be possible until it is supported. To begin the process of getting your organ added, reach out through the <a href="/contact.html?type=PistonLink">contact form</a> — select <strong>PistonLink</strong> as the inquiry type and describe your instrument.</p>
 
@@ -103,6 +104,11 @@
             <p>The Organs tab also shows a real-time <strong>MIDI connection indicator</strong> (a cable icon) in the top-left of the navigation bar. It turns green with a small dot when an adapter is connected and the organ is reachable; tap it for a quick confirmation. If it is gray, check your adapter and cable wiring before trying to deploy.</p>
 
             <p>Tap <strong>•••</strong> in the top right for Help (a step-by-step walkthrough of the whole app), a link to this User Guide, and Settings. Long-press (or swipe, on some organs) any organ card to Rename it; swipe to Delete.</p>
+
+            <h3>Not Sure What Organ You Have? The Organ Compass Wizard</h3>
+            <p>If you don't know your Rodgers console's model number offhand, tap <strong>Not Sure What Organ You Have?</strong> from the Add Organ screen (or the link on the empty Organs tab if you haven't added one yet). The wizard asks a couple of quick physical questions — starting with whether the Pedal stop rail has pull drawknobs or tabs, then which stop name sits leftmost on it — and narrows down to your exact model without you needing to know anything beyond what's in front of you at the console. Confirm the match and it adds the organ for you in one tap.</p>
+
+            <p>The wizard's scope is Rodgers-only — every Johannus console PistonLink supports is self-labeled with a nameplate, so there's no ambiguity to resolve there. If none of the wizard's questions match what you're looking at, it falls back to pointing you at the nameplate under the manuals and drops you into the regular Add Organ picker.</p>
 
             <p>You can add as many organs as you need. Each one maintains its own independent list of profiles, so your two buildings will never get mixed up.</p>
 
@@ -141,7 +147,7 @@
             <p>This is one of the more useful shortcuts in the app. If an organ has more than one profile, tap the small chevron next to the profile name at the top of the Console to open a quick-switch menu listing every other profile for that organ. Tap one and you are instantly viewing it — no need to back out to the profile list and tap back in. Useful when you want to quickly compare how G3 sounds between your "Sacrament Meeting" and "Fast Sunday" profiles.</p>
 
             <h3>Voice Palette</h3>
-            <p>Some Rodgers organs let a single stop tab hide more than one voicing behind an "Alpha Dial" — the physical dial doubles a rank into two or more alternate voices sharing the same slot. PistonLink calls this the <strong>Voice Palette</strong>, and it is supported on the <strong>790C, T788L, 790B, 795, and 835B</strong>. The <strong>Rodgers 751B is the one organ in this family without Alpha Dial hardware</strong>, so it has no Voice Palette stops at all. Turning on an alternate voice always turns off the others sharing that slot (including the primary) — only one voice per slot can sound at a time, exactly as on the real console.</p>
+            <p>Some Rodgers organs let a single stop tab hide more than one voicing behind an "Alpha Dial" — the physical dial doubles a rank into two or more alternate voices sharing the same slot. PistonLink calls this the <strong>Voice Palette</strong>, and it is supported on the <strong>790C, T788, 790B, 795, 835B, and 751A</strong>. The <strong>Rodgers 751B is the one organ in this family without Alpha Dial hardware</strong>, so it has no Voice Palette stops at all. Turning on an alternate voice always turns off the others sharing that slot (including the primary) — only one voice per slot can sound at a time, exactly as on the real console.</p>
 
             <p>How you reach the alternates depends on a setting (<strong>Settings → Voice Palette Display</strong>, covered below):</p>
             <ul>
@@ -149,7 +155,7 @@
               <li><strong>Bottom List</strong> — instead of living on the stop cards, every alternate voice for the current division is broken out into its own expandable <strong>Voice Palette</strong> section underneath the regular stop grid, with a palette icon. Tap to expand it and toggle voices there like any other stop tile.</li>
             </ul>
 
-            <p>A small number of Voice Palette voices (on the 790C and T788L only) are flagged as unusually loud, solo-only sounds. Turning one on shows a temporary orange warning banner naming the stop, which fades away on its own after a few seconds — it is just a heads-up, not a block.</p>
+            <p>A small number of Voice Palette voices (on the 790C and T788 only) are flagged as unusually loud, solo-only sounds. Turning one on shows a temporary orange warning banner naming the stop, which fades away on its own after a few seconds — it is just a heads-up, not a block.</p>
 
             <p>Because a piston stores which alternate you had selected for each slot (separately from whether that slot was on or off), recalling a piston later restores the exact voice you picked, not just the primary. If you ever want to undo a run of alternate-voice experiments across an entire profile, use <strong>Reset Voices</strong> in the Console's ••• menu (below) — it snaps every piston back to each slot's primary voice without touching any on/off states.</p>
 
@@ -184,7 +190,7 @@
             <p>If no MIDI adapter is detected when you tap Deploy, the button will be disabled and the app will explain why. Double-check your cable wiring (see "What You Need Before You Start" above — it is easy to swap IN and OUT), wait a moment for the adapter to be recognized, and try again.</p>
 
             <h3>Stops Didn't Light Up? Finding Your Device ID</h3>
-            <p>Rodgers organs listen for MIDI SysEx messages addressed to a specific <strong>device ID</strong> — a per-installation setting configured by a technician when the organ was set up, not something tied to the organ model itself. Two identical Rodgers 790Cs in different buildings can be set to different device IDs. PistonLink ships with a sensible default, but if a deploy completes without any error and yet nothing visibly changes on the console, a device ID mismatch is almost always the reason.</p>
+            <p>Rodgers organs listen for MIDI SysEx messages addressed to a specific <strong>device ID</strong> — a per-installation setting configured by a technician when the organ was set up, not something tied to the organ model itself. Two identical Rodgers 790Cs in different buildings can be set to different device IDs. PistonLink ships with a sensible default, but if a deploy completes without any error and yet nothing visibly changes on the console, a device ID mismatch is almost always the reason. This section is specific to Rodgers organs — the Johannus WM-44 addresses stops differently and has no device ID to find, so this troubleshooting entry never appears for it.</p>
 
             <p>If a deploy hasn't visibly worked, a <strong>Stops Didn't Light Up?</strong> button appears on the Deploy screen after your first attempted send of that session. Tap it to open a short wizard:</p>
 
@@ -239,7 +245,7 @@
             <h2>Encore: Recording and Replaying a Performance</h2>
             <p>The <strong>Encore</strong> tab captures everything you play at the console — notes, piston presses, registration changes, all of it — as one continuous MIDI stream, and can send that exact performance back to the organ whenever you want to hear it again. Think of it as a tape recorder for the organ itself, not just the audio. Step away from the console — the back pew, the foyer, wherever the sound actually lands — and hear your registration the way the congregation does.</p>
 
-            <p>Encore is currently supported on the <strong>Rodgers 790C and T788L</strong> only — these are the two models that have been validated recording and playing back on real hardware. Support for the rest of the organ family is planned, but for now, if your organ is not one of those two, the Encore transport will not function.</p>
+            <p>Encore is supported on every organ PistonLink supports except the <strong>Rodgers 835B</strong> — that includes the 790C, T788, 751A, 751B, 790B, 795, and the Johannus WM-44. If your organ is a 835B, the Encore transport will not function; support there is planned for once its MIDI dialect has been fully confirmed.</p>
 
             <h3>Recording and Playing Back</h3>
             <p>The Encore screen has three transport buttons styled like the piston buttons on the Console — <strong>Record</strong>, <strong>Stop</strong>, and <strong>Play/Pause</strong> — plus a live waveform and elapsed-time readout while you record, and a status line telling you what is currently playing, paused, or queued up next. The intended order is right there in a caption strip on the screen: <strong>Record → Registration → Perform → Stop</strong> — hit Record, pick your starting registration, then play through your piece, then stop.</p>
