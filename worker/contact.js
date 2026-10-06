@@ -23,6 +23,13 @@ const ALLOWED_ORIGINS = [
 
 export default {
   async fetch(request, env) {
+    // PistonLink "Catalog Your Organ" submissions come from the iOS/Android
+    // app, not a browser — no Origin, no Turnstile — so they get their own
+    // route with its own checks instead of the contact form's.
+    if (new URL(request.url).pathname === '/organ-capture') {
+      return handleOrganCapture(request, env);
+    }
+
     const origin = request.headers.get('Origin') || '';
     const allowed = ALLOWED_ORIGINS.includes(origin);
 
@@ -116,4 +123,149 @@ function json(body, status, headers) {
     status,
     headers: { 'Content-Type': 'application/json', ...headers },
   });
+}
+
+// ---------------------------------------------------------------------------
+// PistonLink organ capture
+//
+// The app POSTs the whole capture session as JSON. This validates it, then
+// emails it to contact@ via Resend with the capture JSON (minus the photo) and
+// the nameplate photo as attachments.
+//
+// Secret required:  wrangler secret put PISTONLINK_CAPTURE_TOKEN
+// (must match the token in the iOS/Android apps). It's not a true secret —
+// it ships in the app — so CAPTURE_LIMITER (wrangler.toml) also caps each IP
+// at a few submissions a minute.
+// ---------------------------------------------------------------------------
+
+const MAX_CAPTURE_BYTES = 5 * 1024 * 1024;
+const MANUFACTURERS = ['Rodgers', 'Allen', 'Johannus'];
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+async function handleOrganCapture(request, env) {
+  if (request.method !== 'POST') {
+    return json({ error: 'Method not allowed' }, 405, {});
+  }
+  if (!env.PISTONLINK_CAPTURE_TOKEN || request.headers.get('X-PistonLink-Token') !== env.PISTONLINK_CAPTURE_TOKEN) {
+    return json({ error: 'Not authorized.' }, 401, {});
+  }
+
+  if (env.CAPTURE_LIMITER) {
+    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+    const { success } = await env.CAPTURE_LIMITER.limit({ key: ip });
+    if (!success) {
+      return json({ error: 'Too many submissions — please wait a minute and try again.' }, 429, {});
+    }
+  }
+
+  const length = Number(request.headers.get('Content-Length') || 0);
+  if (length > MAX_CAPTURE_BYTES) {
+    return json({ error: 'Capture is too large to send.' }, 413, {});
+  }
+
+  const raw = await request.text();
+  if (raw.length > MAX_CAPTURE_BYTES) {
+    return json({ error: 'Capture is too large to send.' }, 413, {});
+  }
+
+  let capture;
+  try {
+    capture = JSON.parse(raw);
+  } catch {
+    return json({ error: 'Invalid capture.' }, 400, {});
+  }
+
+  if (capture?.schemaVersion !== 1 || !MANUFACTURERS.includes(capture.manufacturer) || !Array.isArray(capture.stops)) {
+    return json({ error: 'Invalid capture.' }, 400, {});
+  }
+  if (capture.stops.length > 400) {
+    return json({ error: 'Invalid capture.' }, 400, {});
+  }
+
+  const str = (v, max = 200) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+  const submitter = capture.submitter || {};
+  const email = str(submitter.email);
+  const phone = str(submitter.phone, 40);
+  if (!EMAIL_PATTERN.test(email) || phone.replace(/\D/g, '').length < 7) {
+    return json({ error: 'A valid email and phone number are required.' }, 400, {});
+  }
+  const model = str(capture.model) || '(model unknown)';
+  const title = `${capture.manufacturer} ${model}`;
+  const captured = capture.stops.filter((s) => Array.isArray(s.onMessages) && s.onMessages.length > 0);
+  const skipped = capture.stops.filter((s) => s.skipped);
+  const checkLabels = { allOn: 'All stops came on', someOn: 'Some stops did not come on', noneOn: 'No stops came on' };
+  const verification = capture.verification || {};
+  const failed = new Set(verification.failedStopIDs || []);
+  const offLabel = verification.offWorked === true ? 'yes' : verification.offWorked === false ? 'no' : 'not run';
+
+  const lines = [
+    `Organ: ${title}`,
+    `Serial number: ${str(capture.serialNumber) || '—'}`,
+    `Manuals: ${capture.manualCount ?? '—'}`,
+    `General pistons: ${capture.generalPistonCount ?? '—'}`,
+    `Detected MIDI: ${str(capture.detectedProtocol) || '—'}`,
+    `MIDI sources: ${(capture.midiSourceNames || []).map((n) => str(n)).join(', ') || '—'}`,
+    `App version: ${str(capture.appVersion) || '—'}`,
+    '',
+    `Stops: ${captured.length} captured, ${skipped.length} skipped, ${capture.stops.length} total`,
+    `Send-back check: ${checkLabels[verification.result] || 'not run'}`,
+    `Off codes worked: ${offLabel}`,
+    '',
+    `Name: ${str(submitter.name) || '—'}`,
+    `Email: ${email}`,
+    `Phone: ${phone}`,
+    `Church / location: ${str(submitter.location) || '—'}`,
+  ];
+  if (str(submitter.notes, 4000)) lines.push('', 'Notes:', str(submitter.notes, 4000));
+
+  lines.push('', 'Stop list:');
+  for (const stop of capture.stops) {
+    const name = [str(stop.name), str(stop.pipeLength, 20)].filter(Boolean).join(' ');
+    const on = (stop.onMessages || []).map((m) => str(m.hex, 600)).join(' | ');
+    const status = stop.skipped ? 'SKIPPED' : failed.has(stop.id) ? 'DID NOT COME ON' : '';
+    lines.push(`  [${str(stop.division, 20)}] ${name}${status ? ` (${status})` : ''}${on ? `  →  ${on}` : ''}`);
+  }
+
+  const photo = typeof capture.nameplatePhotoJPEG === 'string' ? capture.nameplatePhotoJPEG : null;
+  const { nameplatePhotoJPEG: _photo, ...captureWithoutPhoto } = capture;
+  const safeName = title.replace(/[^A-Za-z0-9 _-]/g, '').trim() || 'organ';
+
+  const attachments = [
+    { filename: `${safeName} capture.json`, content: base64Utf8(JSON.stringify(captureWithoutPhoto, null, 2)) },
+  ];
+  if (photo) attachments.push({ filename: `${safeName} nameplate.jpg`, content: photo });
+
+  const resendPayload = {
+    from: 'PistonLink <contact@nelsonarrangements.com>',
+    to: ['contact@nelsonarrangements.com'],
+    subject: `PistonLink — Organ Capture: ${title}`,
+    text: lines.join('\n'),
+    attachments,
+  };
+  resendPayload.reply_to = email;
+
+  const resendRes = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(resendPayload),
+  });
+
+  if (!resendRes.ok) {
+    console.error('Resend error (organ capture):', await resendRes.text());
+    return json({ error: "PistonLink couldn't send this right now. Your capture is saved — try again later." }, 502, {});
+  }
+
+  return json({ success: true }, 200, {});
+}
+
+function base64Utf8(text) {
+  const bytes = new TextEncoder().encode(text);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  }
+  return btoa(binary);
 }

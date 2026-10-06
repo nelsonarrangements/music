@@ -1,3 +1,12 @@
 name = "nelson-contact"
 main = "worker/contact.js"
 compatibility_date = "2024-01-01"
+
+# PistonLink organ-capture route: max 3 submissions per IP per minute.
+[[ratelimits]]
+name = "CAPTURE_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 3
+  period = 60
