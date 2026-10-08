@@ -185,9 +185,8 @@ async function handleOrganCapture(request, env) {
   const str = (v, max = 200) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
   const submitter = capture.submitter || {};
   const email = str(submitter.email);
-  const phone = str(submitter.phone, 40);
-  if (!EMAIL_PATTERN.test(email) || phone.replace(/\D/g, '').length < 7) {
-    return json({ error: 'A valid email and phone number are required.' }, 400, {});
+  if (!EMAIL_PATTERN.test(email)) {
+    return json({ error: 'A valid email is required.' }, 400, {});
   }
   const model = str(capture.model) || '(model unknown)';
   const title = `${capture.manufacturer} ${model}`;
@@ -225,12 +224,8 @@ async function handleOrganCapture(request, env) {
     `Encore test: ${encoreLabels[encore.result] || 'not run'}`,
     `Keyboard MIDI channels: ${encoreChannels || '—'}`,
     '',
-    `Name: ${str(submitter.name) || '—'}`,
     `Email: ${email}`,
-    `Phone: ${phone}`,
-    `Church / location: ${str(submitter.location) || '—'}`,
   ];
-  if (str(submitter.notes, 4000)) lines.push('', 'Notes:', str(submitter.notes, 4000));
 
   lines.push('', 'Stop list:');
   for (const stop of capture.stops) {
