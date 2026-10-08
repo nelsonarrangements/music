@@ -130,7 +130,7 @@ function json(body, status, headers) {
 //
 // The app POSTs the whole capture session as JSON. This validates it, then
 // emails it to contact@ via Resend with the capture JSON (minus the photo) and
-// the nameplate photo as attachments.
+// the nameplate and lit-console photos as attachments.
 //
 // Secret required:  wrangler secret put PISTONLINK_CAPTURE_TOKEN
 // (must match the token in the iOS/Android apps). It's not a true secret —
@@ -198,6 +198,18 @@ async function handleOrganCapture(request, env) {
   const failed = new Set(verification.failedStopIDs || []);
   const offLabel = verification.offWorked === true ? 'yes' : verification.offWorked === false ? 'no' : 'not run';
 
+  const encore = capture.encoreTest || {};
+  const encoreLabels = {
+    heardAll: 'Heard the full chord',
+    heardSome: 'Heard only part of it',
+    heardNothing: 'Heard nothing',
+    skipped: 'Skipped',
+  };
+  const encoreChannels = Object.entries(encore.channels || {})
+    .filter(([, ch]) => Number.isInteger(ch))
+    .map(([division, ch]) => `${str(division, 20)} ${ch}`)
+    .join(', ');
+
   const lines = [
     `Organ: ${title}`,
     `Serial number: ${str(capture.serialNumber) || '—'}`,
@@ -210,6 +222,8 @@ async function handleOrganCapture(request, env) {
     `Stops: ${captured.length} captured, ${skipped.length} skipped, ${capture.stops.length} total`,
     `Send-back check: ${checkLabels[verification.result] || 'not run'}`,
     `Off codes worked: ${offLabel}`,
+    `Encore test: ${encoreLabels[encore.result] || 'not run'}`,
+    `Keyboard MIDI channels: ${encoreChannels || '—'}`,
     '',
     `Name: ${str(submitter.name) || '—'}`,
     `Email: ${email}`,
@@ -227,13 +241,18 @@ async function handleOrganCapture(request, env) {
   }
 
   const photo = typeof capture.nameplatePhotoJPEG === 'string' ? capture.nameplatePhotoJPEG : null;
-  const { nameplatePhotoJPEG: _photo, ...captureWithoutPhoto } = capture;
+  const litPhotos = Array.isArray(capture.litConsolePhotosJPEG)
+    ? capture.litConsolePhotosJPEG.filter((p) => typeof p === 'string').slice(0, 3)
+    : [];
+  const { nameplatePhotoJPEG: _photo, litConsolePhotosJPEG: _litPhotos, ...captureWithoutPhoto } = capture;
   const safeName = title.replace(/[^A-Za-z0-9 _-]/g, '').trim() || 'organ';
 
   const attachments = [
     { filename: `${safeName} capture.json`, content: base64Utf8(JSON.stringify(captureWithoutPhoto, null, 2)) },
   ];
   if (photo) attachments.push({ filename: `${safeName} nameplate.jpg`, content: photo });
+  litPhotos.forEach((content, i) => attachments.push({ filename: `${safeName} lit console ${i + 1}.jpg`, content }));
+  lines.push('', `Lit-console photos: ${litPhotos.length}`);
 
   const resendPayload = {
     from: 'PistonLink <contact@nelsonarrangements.com>',
