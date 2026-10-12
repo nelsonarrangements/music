@@ -371,7 +371,7 @@ async function handleCommunityNotify(request, env) {
     `Shared by: ${clean(body.displayName, 30) || 'Anonymous'}`,
     `Verses: ${Number.isInteger(body.verseCount) ? body.verseCount : '—'}`,
     '',
-    'It stays hidden until you approve it. Open the moderation panel and check the Pending tab:',
+    'It stays hidden until you approve it. Open Registration Approvals and check the Pending tab:',
     'http://127.0.0.1:8787',
   ];
 
