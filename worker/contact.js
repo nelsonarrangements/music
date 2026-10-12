@@ -30,6 +30,12 @@ export default {
       return handleOrganCapture(request, env);
     }
 
+    // The PistonLink Community Worker tells this one to email a notice when someone submits a
+    // registration. It reaches us over a service binding and proves itself with a shared token.
+    if (new URL(request.url).pathname === '/community-notify') {
+      return handleCommunityNotify(request, env);
+    }
+
     const origin = request.headers.get('Origin') || '';
     const allowed = ALLOWED_ORIGINS.includes(origin);
 
@@ -272,7 +278,51 @@ async function handleOrganCapture(request, env) {
     return json({ error: "PistonLink couldn't send this right now. Your capture is saved — try again later." }, 502, {});
   }
 
+  await sendCaptureThanks(env, email, title);
   return json({ success: true }, 200, {});
+}
+
+// Best-effort thank-you to the submitter; a failure here never fails the capture itself.
+async function sendCaptureThanks(env, email, title) {
+  const organ = title.replace(/[\u0000-\u001f\u007f]/g, ' ').trim();
+  const text = [
+    'Thank you for cataloging your organ with PistonLink.',
+    '',
+    `We received your capture for the ${organ}. Here is what happens next:`,
+    '',
+    '1. Review. I read through the MIDI codes your organ sent for each stop, and check them against your photos and the send-back test you ran.',
+    '2. Follow-up. If anything looks unclear, I will write to you at this address before adding the organ.',
+    '3. Adding your organ. Once the capture checks out, the organ is built into PistonLink as a fully supported model.',
+    '4. Release. It ships in a future app update. This usually takes a couple of weeks, though a busy stretch can make it longer.',
+    '',
+    'In the meantime, your organ keeps working in the Console and Deploy as a temporary organ, so you can use PistonLink with it right away. When the update arrives, PistonLink moves you to the supported model.',
+    '',
+    'You do not need to do anything else. If you want to add to your submission or have a question, just reply to this email.',
+    '',
+    'Thank you for helping other organists,',
+    'Garrett Nelson',
+    'PistonLink',
+  ].join('\n');
+
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'PistonLink <contact@nelsonarrangements.com>',
+        to: [email],
+        reply_to: 'contact@nelsonarrangements.com',
+        subject: 'Thanks for cataloging your organ with PistonLink',
+        text,
+      }),
+    });
+    if (!res.ok) console.error('Resend error (capture thank-you):', await res.text());
+  } catch (err) {
+    console.error('Capture thank-you failed:', err);
+  }
 }
 
 function base64Utf8(text) {
@@ -282,4 +332,66 @@ function base64Utf8(text) {
     binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
   }
   return btoa(binary);
+}
+
+// ---------------------------------------------------------------------------
+// PistonLink Community: "someone submitted a registration" notice
+//
+// Called by the pistonlink-community Worker right after it stores a new pending submission, so the
+// moderator knows to open the review panel. Best effort on the caller's side: a failure here never
+// affects the submission.
+//
+// Secret required:  wrangler secret put COMMUNITY_NOTIFY_TOKEN  (same value as on pistonlink-community)
+// ---------------------------------------------------------------------------
+
+async function handleCommunityNotify(request, env) {
+  if (request.method !== 'POST') {
+    return json({ error: 'Method not allowed' }, 405, {});
+  }
+  const token = request.headers.get('X-Community-Notify-Token');
+  if (!env.COMMUNITY_NOTIFY_TOKEN || !token || token !== env.COMMUNITY_NOTIFY_TOKEN) {
+    return json({ error: 'Not authorized.' }, 401, {});
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: 'Invalid notice.' }, 400, {});
+  }
+
+  const clean = (v, max = 120) => (typeof v === 'string' ? v.replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max) : '');
+  const hymn = `#${Number.isInteger(body.hymnNumber) ? body.hymnNumber : '?'} ${clean(body.hymnTitle)}`.trim();
+  const lines = [
+    'Someone submitted a registration to the PistonLink Community.',
+    '',
+    `Hymn: ${hymn}`,
+    `Name: ${clean(body.label) || '—'}`,
+    `Built for: ${clean(body.organ, 40) || '—'}`,
+    `Shared by: ${clean(body.displayName, 30) || 'Anonymous'}`,
+    `Verses: ${Number.isInteger(body.verseCount) ? body.verseCount : '—'}`,
+    '',
+    'It stays hidden until you approve it. Open the moderation panel and check the Pending tab:',
+    'http://127.0.0.1:8787',
+  ];
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'PistonLink <contact@nelsonarrangements.com>',
+      to: ['contact@nelsonarrangements.com'],
+      subject: `PistonLink Community: new registration (${hymn})`.slice(0, 200),
+      text: lines.join('\n'),
+    }),
+  });
+
+  if (!res.ok) {
+    console.error('Resend error (community notify):', await res.text());
+    return json({ error: 'Could not send the notice.' }, 502, {});
+  }
+  return json({ success: true }, 200, {});
 }
