@@ -30,6 +30,11 @@ export default {
       return handleOrganCapture(request, env);
     }
 
+    // In-app feedback (bug reports, suggestions, optional screenshot) from the PistonLink apps.
+    if (new URL(request.url).pathname === '/feedback') {
+      return handleFeedback(request, env);
+    }
+
     // The PistonLink Community Worker tells this one to email a notice when someone submits a
     // registration. It reaches us over a service binding and proves itself with a shared token.
     if (new URL(request.url).pathname === '/community-notify') {
@@ -145,7 +150,8 @@ function json(body, status, headers) {
 // ---------------------------------------------------------------------------
 
 const MAX_CAPTURE_BYTES = 5 * 1024 * 1024;
-const MANUFACTURERS = ['Rodgers', 'Allen', 'Johannus'];
+// Must list every maker the apps' Catalog wizard offers (OrganManufacturer), or that capture is rejected.
+const MANUFACTURERS = ['Rodgers', 'Allen', 'Johannus', 'Viscount'];
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 async function handleOrganCapture(request, env) {
@@ -215,6 +221,10 @@ async function handleOrganCapture(request, env) {
     .map(([division, ch]) => `${str(division, 20)} ${ch}`)
     .join(', ');
 
+  // Rodgers Voice Palette / Allen second-voice tab: those codes aren't in the capture, so a yes means a follow-up.
+  const altVoices = capture.hasAlternateVoices;
+  const altVoicesLabel = altVoices === true ? 'YES — follow up by email for the alternate-voice codes' : altVoices === false ? 'no' : 'not answered';
+
   const lines = [
     `Organ: ${title}`,
     `Serial number: ${str(capture.serialNumber) || '—'}`,
@@ -229,6 +239,7 @@ async function handleOrganCapture(request, env) {
     `Off codes worked: ${offLabel}`,
     `Encore test: ${encoreLabels[encore.result] || 'not run'}`,
     `Keyboard MIDI channels: ${encoreChannels || '—'}`,
+    `Alternate voices: ${altVoicesLabel}`,
     '',
     `Email: ${email}`,
   ];
@@ -258,7 +269,7 @@ async function handleOrganCapture(request, env) {
   const resendPayload = {
     from: 'PistonLink <contact@nelsonarrangements.com>',
     to: ['contact@nelsonarrangements.com'],
-    subject: `PistonLink — Organ Capture: ${title}`,
+    subject: `PistonLink — Organ Capture: ${title}${altVoices === true ? ' (alternate voices: follow up)' : ''}`,
     text: lines.join('\n'),
     attachments,
   };
@@ -323,6 +334,97 @@ async function sendCaptureThanks(env, email, title) {
   } catch (err) {
     console.error('Capture thank-you failed:', err);
   }
+}
+
+// ---------------------------------------------------------------------------
+// PistonLink in-app feedback
+//
+// The app POSTs { message, category, email, platform, appVersion, osVersion, device,
+// screenshotJPEG? } as JSON. Same shared token and per-IP limiter as the organ-capture route.
+// Emails contact@ via Resend; the optional screenshot rides along as an attachment, and
+// reply_to is the sender's email (required, so there is always someone to answer).
+// ---------------------------------------------------------------------------
+
+const MAX_FEEDBACK_BYTES = 6 * 1024 * 1024;
+const FEEDBACK_CATEGORIES = { bug: 'Bug', suggestion: 'Suggestion', other: 'Other' };
+
+async function handleFeedback(request, env) {
+  if (request.method !== 'POST') {
+    return json({ error: 'Method not allowed' }, 405, {});
+  }
+  if (!env.PISTONLINK_CAPTURE_TOKEN || request.headers.get('X-PistonLink-Token') !== env.PISTONLINK_CAPTURE_TOKEN) {
+    return json({ error: 'Not authorized.' }, 401, {});
+  }
+
+  if (env.CAPTURE_LIMITER) {
+    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+    const { success } = await env.CAPTURE_LIMITER.limit({ key: ip });
+    if (!success) {
+      return json({ error: 'Too many submissions — please wait a minute and try again.' }, 429, {});
+    }
+  }
+
+  if (Number(request.headers.get('Content-Length') || 0) > MAX_FEEDBACK_BYTES) {
+    return json({ error: 'That is too large to send. Try a smaller screenshot.' }, 413, {});
+  }
+  const raw = await request.text();
+  if (raw.length > MAX_FEEDBACK_BYTES) {
+    return json({ error: 'That is too large to send. Try a smaller screenshot.' }, 413, {});
+  }
+
+  let body;
+  try {
+    body = JSON.parse(raw);
+  } catch {
+    return json({ error: 'Invalid feedback.' }, 400, {});
+  }
+
+  const str = (v, max = 200) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+  const message = str(body?.message, 4000);
+  if (!message) {
+    return json({ error: 'Please write a message first.' }, 400, {});
+  }
+  const category = FEEDBACK_CATEGORIES[str(body.category, 20)] || 'Other';
+  const email = str(body.email);
+  if (!EMAIL_PATTERN.test(email)) {
+    return json({ error: 'A valid email is required so we can reply.' }, 400, {});
+  }
+  const platform = str(body.platform, 20) || '—';
+
+  const lines = [
+    `Category: ${category}`,
+    `Platform: ${platform}`,
+    `App version: ${str(body.appVersion, 40) || '—'}`,
+    `OS: ${str(body.osVersion, 60) || '—'}`,
+    `Device: ${str(body.device, 80) || '—'}`,
+    `Reply to: ${email}`,
+    '',
+    message,
+  ];
+
+  const screenshot = typeof body.screenshotJPEG === 'string' ? body.screenshotJPEG : null;
+  const payload = {
+    from: 'PistonLink <contact@nelsonarrangements.com>',
+    to: ['contact@nelsonarrangements.com'],
+    subject: `PistonLink — Feedback (${category}, ${platform}): ${message.replace(/\s+/g, ' ').slice(0, 60)}`,
+    text: lines.join('\n'),
+  };
+  payload.reply_to = email;
+  if (screenshot) payload.attachments = [{ filename: 'screenshot.jpg', content: screenshot }];
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    console.error('Resend error (feedback):', await res.text());
+    return json({ error: "PistonLink couldn't send this right now. Please try again later." }, 502, {});
+  }
+  return json({ success: true }, 200, {});
 }
 
 function base64Utf8(text) {
